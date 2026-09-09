@@ -92,6 +92,37 @@ function rf_favicons() {
 add_action( 'wp_head', 'rf_favicons', 3 );
 
 /**
+ * Open-Graph-, Twitter- und Meta-Description-Tags für Teilen & SEO.
+ */
+function rf_open_graph() {
+	$title = wp_get_document_title();
+	$desc  = get_bloginfo( 'description' );
+	if ( is_singular( 'post' ) ) {
+		$ex = get_the_excerpt();
+		if ( $ex ) {
+			$desc = $ex;
+		}
+	}
+	$desc = trim( mb_substr( wp_strip_all_tags( $desc ), 0, 200 ) );
+	$url  = is_singular() ? get_permalink() : home_url( '/' );
+	$img  = RF_URI . '/assets/og-image.png';
+
+	printf( '<meta name="description" content="%s">' . "\n", esc_attr( $desc ) );
+	echo '<meta property="og:type" content="website">' . "\n";
+	echo '<meta property="og:site_name" content="Rechtsfux">' . "\n";
+	echo '<meta property="og:locale" content="de_CH">' . "\n";
+	printf( '<meta property="og:title" content="%s">' . "\n", esc_attr( $title ) );
+	printf( '<meta property="og:description" content="%s">' . "\n", esc_attr( $desc ) );
+	printf( '<meta property="og:url" content="%s">' . "\n", esc_url( $url ) );
+	printf( '<meta property="og:image" content="%s">' . "\n", esc_url( $img ) );
+	echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
+	printf( '<meta name="twitter:title" content="%s">' . "\n", esc_attr( $title ) );
+	printf( '<meta name="twitter:description" content="%s">' . "\n", esc_attr( $desc ) );
+	printf( '<meta name="twitter:image" content="%s">' . "\n", esc_url( $img ) );
+}
+add_action( 'wp_head', 'rf_open_graph', 4 );
+
+/**
  * URL einer Seite anhand ihres Slugs (Kind- und Top-Level).
  */
 function rf_url( $slug ) {
