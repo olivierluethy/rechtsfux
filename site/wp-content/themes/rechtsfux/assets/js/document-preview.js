@@ -63,4 +63,36 @@
 			}
 		});
 	}
+
+	/* Kündigungsfrist nach OR (Art. 335c) — nur beim Arbeits-Kündigungsbrief */
+	if (doc.getAttribute('data-doc') === 'kuendigung-arbeit') {
+		var eintritt = form.querySelector('[name="eintritt"]');
+		var termin = form.querySelector('[name="termin"]');
+		var info = doc.querySelector('[data-frist-info]');
+		var terminTouched = false;
+
+		termin.addEventListener('input', function (e) { if (e.isTrusted) terminTouched = true; });
+
+		function lastDayOfMonth(y, mZeroBased) { return new Date(y, mZeroBased + 1, 0); }
+		function toISO(d) {
+			return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+		}
+		function computeFrist() {
+			if (!eintritt.value) { info.textContent = ''; return; }
+			var start = new Date(eintritt.value);
+			if (isNaN(start.getTime())) { info.textContent = ''; return; }
+			var today = new Date();
+			var completedYears = (today - start) / (365.25 * 24 * 3600 * 1000);
+			// OR 335c: 1. Jahr = 1 Monat, 2.–9. Jahr = 2 Monate, ab 10. Jahr = 3 Monate; jeweils auf Monatsende.
+			var frist = completedYears < 1 ? 1 : (completedYears < 9 ? 2 : 3);
+			var earliest = lastDayOfMonth(today.getFullYear(), today.getMonth() + frist);
+			info.textContent = 'Kündigungsfrist nach OR: ' + frist + ' Monat' + (frist > 1 ? 'e' : '') +
+				' auf Monatsende → frühestens per ' + earliest.toLocaleDateString('de-CH') + '.';
+			if (!terminTouched) {
+				termin.value = toISO(earliest);
+				termin.dispatchEvent(new Event('input', { bubbles: true }));
+			}
+		}
+		eintritt.addEventListener('input', computeFrist);
+	}
 })();

@@ -281,10 +281,12 @@ function rf_doc_kuendigung_arbeit() { ?>
 
 			<fieldset class="rf-fieldset">
 				<legend>Kündigung</legend>
+				<div class="rf-field"><label>Eintrittsdatum <span class="rf-help">für die Fristberechnung nach OR</span></label><input class="rf-input" type="date" name="eintritt"></div>
 				<div class="rf-field-row">
-					<div class="rf-field"><label>Kündigung per <span class="rf-help">letzter Arbeitstag</span></label><input class="rf-input" type="date" name="termin"></div>
+					<div class="rf-field"><label>Kündigung per <span class="rf-help">wird berechnet, überschreibbar</span></label><input class="rf-input" type="date" name="termin"></div>
 					<div class="rf-field"><label>Ort/Datum des Schreibens</label><input class="rf-input" name="brief_ort" placeholder="Zürich"></div>
 				</div>
+				<p class="rf-help" data-frist-info style="margin:.2rem 0 0; color: var(--accent);"></p>
 			</fieldset>
 		</form>
 
