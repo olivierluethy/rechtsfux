@@ -536,3 +536,40 @@ strong { font-weight: 700; }
 .rf-note { display: flex; gap: .6rem; align-items: flex-start; padding: .9rem 1.1rem; border-radius: var(--r-xs); background: var(--amber-soft); color: var(--ink-2); font-size: .86rem; margin-top: 1rem; border: 1px solid color-mix(in srgb, var(--amber) 30%, transparent); }
 .rf-note svg { width: 20px; height: 20px; color: var(--amber); flex: none; margin-top: 1px; }
 
+/* ==========================================================================
+   Rechner (Tools)
+   ========================================================================== */
+.rf-calc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--shadow-sm); padding: clamp(1.35rem, 3vw, 2rem); scroll-margin-top: calc(var(--nav-h) + 1rem); }
+.rf-calc + .rf-calc { margin-top: 1.5rem; }
+.rf-calc__head { display: flex; align-items: center; gap: .8rem; margin-bottom: 1.25rem; }
+.rf-calc__ico { width: 46px; height: 46px; display: grid; place-items: center; border-radius: var(--r-sm); background: var(--accent-soft); color: var(--accent); flex: none; }
+.rf-calc__head h3 { margin: 0; }
+.rf-calc__head p { margin: 0; color: var(--ink-3); font-size: .88rem; }
+.rf-calc__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.5rem; align-items: start; }
+.rf-result { background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--r); padding: 1.25rem; display: grid; gap: .6rem; align-content: start; }
+.rf-result__big { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.8rem, 1.4rem + 2vw, 2.6rem); color: var(--accent); line-height: 1; letter-spacing: -.02em; }
+.rf-result__row { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding: .4rem 0; border-bottom: 1px dashed var(--line-2); font-size: .92rem; }
+.rf-result__row:last-child { border-bottom: 0; }
+.rf-result__row span:first-child { color: var(--ink-2); }
+.rf-result__row span:last-child { font-weight: 600; font-variant-numeric: tabular-nums; }
+.rf-seg { display: inline-flex; background: var(--surface-2); border: 1px solid var(--line-2); border-radius: var(--r-xs); padding: 3px; gap: 3px; }
+.rf-seg button { border: 0; background: transparent; padding: .5rem .8rem; border-radius: 8px; font-family: var(--font-text); font-weight: 600; font-size: .9rem; color: var(--ink-2); cursor: pointer; transition: background .18s, color .18s; }
+.rf-seg button.is-active { background: var(--accent); color: var(--accent-ink); }
+
+/* ==========================================================================
+   Prosa (Artikel / statische Seiten)
+   ========================================================================== */
+.rf-prose { max-width: 68ch; }
+.rf-prose .rf-lead, .rf-lead { font-size: 1.2rem; line-height: 1.6; color: var(--ink); font-weight: 500; margin-bottom: 1.5rem; }
+.rf-prose h2 { margin-top: 2.25rem; }
+.rf-prose h3 { margin-top: 1.75rem; }
+.rf-prose p, .rf-prose li { color: var(--ink-2); }
+.rf-prose ul, .rf-prose ol { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+.rf-prose li { margin-bottom: .5rem; }
+.rf-prose a { text-decoration: underline; text-underline-offset: 3px; }
+.rf-prose em { color: var(--ink-3); }
+
+.rf-article__head { padding-top: clamp(2rem, 1.5rem + 3vw, 3.5rem); }
+.rf-article__title { max-width: 20ch; }
+.rf-article__meta { display: flex; align-items: center; gap: .8rem; color: var(--ink-3); font-size: .9rem; margin-top: 1rem; }
+
