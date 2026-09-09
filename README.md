@@ -13,6 +13,7 @@ Dark/Light-Mode und ein durchgängig responsives, straffes „Schweizer-Präzisi
 
 ## Inhalt
 
+- [Screenshots](#screenshots)
 - [Inspiration & Abgrenzung](#inspiration--abgrenzung)
 - [Schnellstart](#schnellstart)
 - [Login / WordPress-Backend](#login--wordpress-backend)
@@ -28,6 +29,20 @@ Dark/Light-Mode und ein durchgängig responsives, straffes „Schweizer-Präzisi
 - [Befehls-Spickzettel](#befehls-spickzettel)
 
 ---
+
+## Screenshots
+
+**Startseite — Light &amp; Dark Mode**
+
+| Light | Dark |
+|---|---|
+| ![Startseite Light](docs/screenshots/home-light.png) | ![Startseite Dark](docs/screenshots/home-dark.png) |
+
+**Dokument-Generator mit Live-Vorschau** &nbsp;·&nbsp; **Rechner** &nbsp;·&nbsp; **Mobile**
+
+| Dokument-Generator | Rechner | Mobile |
+|---|---|---|
+| ![Dokument-Generator](docs/screenshots/document-generator.png) | ![Rechner](docs/screenshots/calculators.png) | ![Mobile](docs/screenshots/mobile.png) |
 
 ## Inspiration & Abgrenzung
 
@@ -274,3 +289,9 @@ cd site && php -S localhost:8080 -t . router.php   # Server manuell
 ```
 
 Login: **http://localhost:8080/wp-login.php** · `admin` / `Rechtsfux2026!`
+
+## Lizenz
+
+Der eigene Code dieses Projekts (Theme, Skripte, Konfiguration) steht unter der
+[MIT-Lizenz](LICENSE). WordPress-Core und das SQLite-Plugin haben ihre eigenen Lizenzen (GPL)
+und werden nicht mitgeliefert, sondern via `setup.sh` bezogen.
