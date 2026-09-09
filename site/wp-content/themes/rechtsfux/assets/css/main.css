@@ -573,3 +573,53 @@ strong { font-weight: 700; }
 .rf-article__title { max-width: 20ch; }
 .rf-article__meta { display: flex; align-items: center; gap: .8rem; color: var(--ink-3); font-size: .9rem; margin-top: 1rem; }
 
+/* ==========================================================================
+   Reveal-Animation (dezent, respektiert reduced-motion)
+   ========================================================================== */
+.rf-reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
+.rf-reveal.is-in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+	.rf-reveal { opacity: 1; transform: none; transition: none; }
+	.rf-cat, .rf-post, .rf-item, .rf-btn { transition: none; }
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+@media (max-width: 1000px) {
+	.rf-cats, .rf-posts { grid-template-columns: repeat(2, 1fr); }
+	.rf-footer__top { grid-template-columns: 1fr 1fr; }
+	.rf-footer__brand { grid-column: 1 / -1; }
+}
+@media (max-width: 860px) {
+	.rf-nav, .rf-head-actions .rf-theme-toggle { display: none; }
+	.rf-burger { display: inline-grid; }
+	.rf-split { grid-template-columns: 1fr; }
+	.rf-split--rev .rf-split__media { order: 0; }
+	.rf-doc { grid-template-columns: 1fr; }
+	.rf-preview-wrap { position: static; }
+	.rf-calc__grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+	.rf-cats, .rf-posts { grid-template-columns: 1fr; }
+	.rf-steps { grid-template-columns: 1fr; gap: 1.75rem; }
+	.rf-steps::before { display: none; }
+	.rf-field-row { grid-template-columns: 1fr; }
+	.rf-trust { gap: .75rem 1.5rem; }
+}
+@media (max-width: 520px) {
+	.rf-footer__top { grid-template-columns: 1fr; }
+	.rf-cta__actions { flex-direction: column; }
+	.rf-cta__actions .rf-btn { width: 100%; justify-content: center; }
+}
+
+/* ==========================================================================
+   Print (Dokument-Vorschau)
+   ========================================================================== */
+@media print {
+	.rf-header, .rf-footer, .rf-form, .rf-preview-bar, .rf-breadcrumb, .rf-note, .rf-pagehead__ico, .rf-mobile { display: none !important; }
+	body { background: #fff; }
+	.rf-doc { display: block; }
+	.rf-preview { box-shadow: none; border: 0; padding: 0; }
+	.rf-preview mark { background: transparent; }
+}
