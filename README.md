@@ -231,15 +231,16 @@ der Rest bleibt ruhig.
 - Startseite (Hero-Befehlsleiste mit Live-Suche, Prozess, Kategorien, Tools-Teaser, Rechtsschutz,
   Ratgeber, FAQ, CTA).
 - 6 Kategorien mit Mega-Menü / Mobile-Akkordeon; Kategorie-Übersichtsseiten.
-- **3 voll funktionsfähige Dokument-Generatoren** mit Live-Vorschau, Drucken & Kopieren:
-  Wohnung kündigen · Arbeitsvertrag · Patientenverfügung.
+- **8 funktionsfähige Dokument-Generatoren** mit Live-Vorschau, Drucken & Kopieren:
+  Wohnung kündigen · Arbeitsstelle kündigen · Arbeitsvertrag · Patientenverfügung ·
+  Auto-Kaufvertrag · Darlehensvertrag · Untermietvertrag · Mängelrüge.
 - **3 funktionierende Rechner:** Erbschaft (CH-Erbrecht ab 2023), Bussen (Ordnungsbussen), MwSt.
 - Ratgeber-Blog (1 ausgearbeiteter Artikel + 2 Beispiele), Über uns, Kontakt (Demo-Formular),
   Impressum/Datenschutz/AGB (Platzhalter).
 - Dark/Light-Mode (System-Automatik + Toggle, kein Flash), voll responsive, 404-Seite.
 
 **Bewusst NICHT umgesetzt (YAGNI / Scope „Struktur + Beispiel-Tiefe")**
-- Nicht alle 40+ Dokumentseiten des Vorbilds — nur 3 exemplarisch voll ausgebaut; die übrigen sind
+- Nicht alle 40+ Dokumentseiten des Vorbilds — 8 exemplarisch voll ausgebaut; die übrigen sind
   als Navigation/Karten mit „bald"-Kennzeichnung angelegt und führen nie ins Leere.
 - Kein Zahlungs-/Login-Flow für Endkunden, kein E-Mail-Versand, kein CRM.
 - Kein Mehrsprachen-Support (nur Deutsch/CH).
