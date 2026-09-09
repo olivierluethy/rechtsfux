@@ -92,7 +92,7 @@
 
 /* ---------- Reset / Base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; overflow-x: clip; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 body {
@@ -592,7 +592,7 @@ strong { font-weight: 700; }
 	.rf-footer__brand { grid-column: 1 / -1; }
 }
 @media (max-width: 860px) {
-	.rf-nav, .rf-head-actions .rf-theme-toggle { display: none; }
+	.rf-nav, .rf-head-actions .rf-theme-toggle, .rf-cta-doc { display: none; }
 	.rf-burger { display: inline-grid; }
 	.rf-split { grid-template-columns: 1fr; }
 	.rf-split--rev .rf-split__media { order: 0; }
