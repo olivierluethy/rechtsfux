@@ -27,6 +27,8 @@ Dark/Light-Mode und ein durchgängig responsives, straffes „Schweizer-Präzisi
 - [Barrierefreiheit & Qualität](#barrierefreiheit--qualität)
 - [Von Demo zu Produktion](#von-demo-zu-produktion)
 - [Befehls-Spickzettel](#befehls-spickzettel)
+- [Mitwirken](#mitwirken)
+- [Lizenz](#lizenz)
 
 ---
 
@@ -238,6 +240,10 @@ der Rest bleibt ruhig.
 - Ratgeber-Blog (1 ausgearbeiteter Artikel + 2 Beispiele), Über uns, Kontakt (Demo-Formular),
   Impressum/Datenschutz/AGB (Platzhalter).
 - Dark/Light-Mode (System-Automatik + Toggle, kein Flash), voll responsive, 404-Seite.
+- **4 Rechner:** Erbschaft, Bussen, MwSt, 13.-Monatslohn.
+- **Marke & Teilen:** geometrisches Fuchs-Logo, Vektor-Favicon, App-Icons, Web-Manifest,
+  Open-Graph-/Twitter-Meta mit gerendertem Markenbild, robots.txt-Regeln + Core-Sitemap.
+- **Qualität:** `tests/smoke.sh` und zwei GitHub-Actions (PHP Lint + Smoke Test), `.editorconfig`.
 
 **Bewusst NICHT umgesetzt (YAGNI / Scope „Struktur + Beispiel-Tiefe")**
 - Nicht alle 40+ Dokumentseiten des Vorbilds — 8 exemplarisch voll ausgebaut; die übrigen sind
@@ -290,6 +296,14 @@ cd site && php -S localhost:8080 -t . router.php   # Server manuell
 ```
 
 Login: **http://localhost:8080/wp-login.php** · `admin` / `Rechtsfux2026!`
+
+## Mitwirken
+
+Wie du lokal arbeitest, neue Vorlagen/Rechner hinzufügst und welche Checks/CI grün sein müssen,
+steht in [CONTRIBUTING.md](CONTRIBUTING.md). Nennenswerte Änderungen sind im
+[CHANGELOG.md](CHANGELOG.md) festgehalten. Zwei GitHub-Actions laufen bei jedem Push:
+**PHP Lint** (Syntax aller eigenen PHP-Dateien) und **Smoke Test** (baut die Seite auf und prüft
+alle wichtigen Seiten).
 
 ## Lizenz
 
