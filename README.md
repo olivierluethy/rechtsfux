@@ -77,6 +77,15 @@ Dann im Browser: **http://localhost:8080**
 - Dark-Mode direkt ansehen: an jede URL `?rf-theme=dark` (bzw. `?rf-theme=light`) hängen.
 - Server manuell: `cd site && php -S localhost:8080 -t . router.php`
 
+**Als Container (Docker):** Ein fertiges Image wird bei jedem Release nach ghcr.io publiziert.
+
+```bash
+docker run --rm -p 8080:8080 ghcr.io/olivierluethy/rechtsfux:latest
+# danach: http://localhost:8080
+```
+
+Selbst bauen: `docker build -t rechtsfux . && docker run --rm -p 8080:8080 rechtsfux`
+
 ## Login / WordPress-Backend
 
 > **Am zuverlässigsten über die Login-Datei direkt:**
