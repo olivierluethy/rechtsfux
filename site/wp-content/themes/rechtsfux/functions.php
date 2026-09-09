@@ -80,6 +80,18 @@ function rf_resource_hints( $hints, $relation ) {
 add_filter( 'wp_resource_hints', 'rf_resource_hints', 10, 2 );
 
 /**
+ * Favicon, App-Icons und Web-Manifest ausgeben.
+ */
+function rf_favicons() {
+	$a = RF_URI . '/assets';
+	printf( '<link rel="icon" type="image/svg+xml" href="%s">' . "\n", esc_url( $a . '/favicon.svg' ) );
+	printf( '<link rel="icon" type="image/png" sizes="32x32" href="%s">' . "\n", esc_url( $a . '/favicon-32.png' ) );
+	printf( '<link rel="apple-touch-icon" href="%s">' . "\n", esc_url( $a . '/apple-touch-icon.png' ) );
+	printf( '<link rel="manifest" href="%s">' . "\n", esc_url( $a . '/site.webmanifest' ) );
+}
+add_action( 'wp_head', 'rf_favicons', 3 );
+
+/**
  * URL einer Seite anhand ihres Slugs (Kind- und Top-Level).
  */
 function rf_url( $slug ) {
