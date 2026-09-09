@@ -23,6 +23,12 @@ function rf_render_document( $type ) {
 		case 'patientenverfuegung':
 			rf_doc_patientenverfuegung();
 			break;
+		case 'kuendigung-arbeit':
+			rf_doc_kuendigung_arbeit();
+			break;
+		case 'auto-kaufvertrag':
+			rf_doc_auto_kaufvertrag();
+			break;
 		case 'kuendigung-wohnung':
 		default:
 			rf_doc_kuendigung_wohnung();
@@ -233,6 +239,135 @@ function rf_doc_patientenverfuegung() { ?>
 				<div class="doc-sign"><div class="line"><?php echo rf_bind( 'name', 'Unterschrift' ); // phpcs:ignore ?></div></div>
 			</div>
 			<div class="rf-note"><?php echo rf_icon( 'shield' ); // phpcs:ignore ?><span>Damit sie verbindlich ist, muss die Patientenverfügung eigenhändig datiert und unterschrieben werden. Hinterlegen Sie eine Kopie bei Ihrer Vertretungsperson und Ihrem Hausarzt.</span></div>
+		</div>
+	</div>
+<?php }
+
+/* ------------------------------------------------------------------ */
+function rf_doc_kuendigung_arbeit() { ?>
+	<div class="rf-doc" data-doc="kuendigung-arbeit">
+		<form class="rf-form" autocomplete="off" onsubmit="return false;">
+			<fieldset class="rf-fieldset">
+				<legend>Ihre Angaben</legend>
+				<div class="rf-field-row">
+					<div class="rf-field"><label>Vorname</label><input class="rf-input" name="abs_vorname" placeholder="Anna"></div>
+					<div class="rf-field"><label>Nachname</label><input class="rf-input" name="abs_nachname" placeholder="Muster"></div>
+				</div>
+				<div class="rf-field"><label>Strasse &amp; Nr.</label><input class="rf-input" name="abs_strasse" placeholder="Bahnhofstrasse 1"></div>
+				<div class="rf-field-row">
+					<div class="rf-field"><label>PLZ</label><input class="rf-input" name="abs_plz" placeholder="8001"></div>
+					<div class="rf-field"><label>Ort</label><input class="rf-input" name="abs_ort" placeholder="Zürich"></div>
+				</div>
+			</fieldset>
+
+			<fieldset class="rf-fieldset">
+				<legend>Arbeitgeber</legend>
+				<div class="rf-field"><label>Firma / Ansprechperson</label><input class="rf-input" name="ag_name" placeholder="Muster AG, Personalabteilung"></div>
+				<div class="rf-field"><label>Strasse &amp; Nr.</label><input class="rf-input" name="ag_strasse" placeholder="Industriestrasse 10"></div>
+				<div class="rf-field-row">
+					<div class="rf-field"><label>PLZ</label><input class="rf-input" name="ag_plz" placeholder="8005"></div>
+					<div class="rf-field"><label>Ort</label><input class="rf-input" name="ag_ort" placeholder="Zürich"></div>
+				</div>
+			</fieldset>
+
+			<fieldset class="rf-fieldset">
+				<legend>Kündigung</legend>
+				<div class="rf-field-row">
+					<div class="rf-field"><label>Kündigung per <span class="rf-help">letzter Arbeitstag</span></label><input class="rf-input" type="date" name="termin"></div>
+					<div class="rf-field"><label>Ort/Datum des Schreibens</label><input class="rf-input" name="brief_ort" placeholder="Zürich"></div>
+				</div>
+			</fieldset>
+		</form>
+
+		<div class="rf-preview-wrap">
+			<div class="rf-preview-bar">
+				<span class="rf-preview-bar__label"><?php echo rf_icon( 'pen' ); // phpcs:ignore ?> Live-Vorschau</span>
+				<div class="rf-preview-actions">
+					<button class="rf-btn rf-btn--ghost rf-print" type="button"><?php echo rf_icon( 'print' ); // phpcs:ignore ?> Drucken</button>
+					<button class="rf-btn rf-btn--soft rf-copy" type="button"><?php echo rf_icon( 'copy' ); // phpcs:ignore ?> Kopieren</button>
+				</div>
+			</div>
+			<div class="rf-preview" data-preview>
+				<div class="doc-sender">
+					<?php echo rf_bind( 'abs_vorname', 'Vorname' ); // phpcs:ignore ?> <?php echo rf_bind( 'abs_nachname', 'Nachname' ); // phpcs:ignore ?><br>
+					<?php echo rf_bind( 'abs_strasse', 'Strasse Nr.' ); // phpcs:ignore ?><br>
+					<?php echo rf_bind( 'abs_plz', 'PLZ' ); // phpcs:ignore ?> <?php echo rf_bind( 'abs_ort', 'Ort' ); // phpcs:ignore ?>
+				</div>
+				<div class="doc-recipient">
+					<?php echo rf_bind( 'ag_name', 'Arbeitgeber' ); // phpcs:ignore ?><br>
+					<?php echo rf_bind( 'ag_strasse', 'Strasse Nr.' ); // phpcs:ignore ?><br>
+					<?php echo rf_bind( 'ag_plz', 'PLZ' ); // phpcs:ignore ?> <?php echo rf_bind( 'ag_ort', 'Ort' ); // phpcs:ignore ?>
+				</div>
+				<div class="doc-place"><?php echo rf_bind( 'brief_ort', 'Ort' ); // phpcs:ignore ?>, <mark data-bind="__today" data-today><?php echo esc_html( date_i18n( 'j. F Y' ) ); ?></mark></div>
+				<div class="doc-subject">Kündigung des Arbeitsverhältnisses</div>
+				<div class="doc-body">
+					<p>Sehr geehrte Damen und Herren</p>
+					<p>Hiermit kündige ich mein Arbeitsverhältnis ordentlich und fristgerecht per <strong><mark data-bind="termin" data-empty="[Kündigungsdatum]" data-date>[Kündigungsdatum]</mark></strong>.</p>
+					<p>Ich danke Ihnen für die bisherige Zusammenarbeit. Bitte bestätigen Sie mir den Erhalt dieser Kündigung sowie das Enddatum schriftlich und stellen Sie mir ein qualifiziertes Arbeitszeugnis aus.</p>
+					<p>Freundliche Grüsse</p>
+				</div>
+				<div class="doc-sign">
+					<div class="line"><?php echo rf_bind( 'abs_vorname', 'Vorname' ); // phpcs:ignore ?> <?php echo rf_bind( 'abs_nachname', 'Nachname' ); // phpcs:ignore ?></div>
+				</div>
+			</div>
+			<div class="rf-note"><?php echo rf_icon( 'clock' ); // phpcs:ignore ?><span>Beachten Sie Ihre Kündigungsfrist (nach OR meist 1 Monat im 1. Dienstjahr, danach 2, ab dem 10. Jahr 3 Monate — sofern der Vertrag nichts anderes sagt) auf ein Monatsende. Senden Sie die Kündigung eingeschrieben.</span></div>
+		</div>
+	</div>
+<?php }
+
+/* ------------------------------------------------------------------ */
+function rf_doc_auto_kaufvertrag() { ?>
+	<div class="rf-doc" data-doc="auto-kaufvertrag">
+		<form class="rf-form" autocomplete="off" onsubmit="return false;">
+			<fieldset class="rf-fieldset">
+				<legend>Parteien</legend>
+				<div class="rf-field"><label>Verkäufer/in (Name, Ort)</label><input class="rf-input" name="verk" placeholder="Anna Muster, Zürich"></div>
+				<div class="rf-field"><label>Käufer/in (Name, Ort)</label><input class="rf-input" name="kauf" placeholder="Peter Beispiel, Bern"></div>
+			</fieldset>
+			<fieldset class="rf-fieldset">
+				<legend>Fahrzeug</legend>
+				<div class="rf-field"><label>Marke &amp; Modell</label><input class="rf-input" name="fz_modell" placeholder="VW Golf 1.5 TSI"></div>
+				<div class="rf-field-row">
+					<div class="rf-field"><label>Stammnummer / VIN</label><input class="rf-input" name="fz_vin" placeholder="WVWZZZ…"></div>
+					<div class="rf-field"><label>Kontrollschild</label><input class="rf-input" name="fz_schild" placeholder="ZH 123456"></div>
+				</div>
+				<div class="rf-field-row">
+					<div class="rf-field"><label>Erstzulassung</label><input class="rf-input" name="fz_erst" placeholder="03.2019"></div>
+					<div class="rf-field"><label>Kilometerstand</label><input class="rf-input" name="fz_km" placeholder="72'000"></div>
+				</div>
+			</fieldset>
+			<fieldset class="rf-fieldset">
+				<legend>Kauf</legend>
+				<div class="rf-field-row">
+					<div class="rf-field"><label>Kaufpreis (CHF)</label><input class="rf-input" name="preis" placeholder="14500"></div>
+					<div class="rf-field"><label>Ort/Datum</label><input class="rf-input" name="brief_ort" placeholder="Zürich"></div>
+				</div>
+			</fieldset>
+		</form>
+
+		<div class="rf-preview-wrap">
+			<div class="rf-preview-bar">
+				<span class="rf-preview-bar__label"><?php echo rf_icon( 'pen' ); // phpcs:ignore ?> Live-Vorschau</span>
+				<div class="rf-preview-actions">
+					<button class="rf-btn rf-btn--ghost rf-print" type="button"><?php echo rf_icon( 'print' ); // phpcs:ignore ?> Drucken</button>
+					<button class="rf-btn rf-btn--soft rf-copy" type="button"><?php echo rf_icon( 'copy' ); // phpcs:ignore ?> Kopieren</button>
+				</div>
+			</div>
+			<div class="rf-preview" data-preview>
+				<h4 class="doc-title">Kaufvertrag für ein Fahrzeug</h4>
+				<p>zwischen <strong><?php echo rf_bind( 'verk', 'Verkäufer/in' ); // phpcs:ignore ?></strong> (Verkäufer/in)</p>
+				<p>und <strong><?php echo rf_bind( 'kauf', 'Käufer/in' ); // phpcs:ignore ?></strong> (Käufer/in)</p>
+				<div class="doc-clause"><strong>1. Kaufgegenstand</strong><?php echo rf_bind( 'fz_modell', 'Marke &amp; Modell' ); // phpcs:ignore ?>, Stammnummer/VIN <?php echo rf_bind( 'fz_vin', '—' ); // phpcs:ignore ?>, Kontrollschild <?php echo rf_bind( 'fz_schild', '—' ); // phpcs:ignore ?>, Erstzulassung <?php echo rf_bind( 'fz_erst', '—' ); // phpcs:ignore ?>, Kilometerstand <?php echo rf_bind( 'fz_km', '—' ); // phpcs:ignore ?> km.</div>
+				<div class="doc-clause"><strong>2. Kaufpreis</strong>Der Kaufpreis beträgt CHF <?php echo rf_bind( 'preis', 'Betrag' ); // phpcs:ignore ?> und ist bei Übergabe zu bezahlen.</div>
+				<div class="doc-clause"><strong>3. Übergabe &amp; Zustand</strong>Das Fahrzeug wird im aktuellen, dem Käufer bekannten Zustand «gekauft wie gesehen» übergeben. Ein Umtausch oder eine Rückgabe ist ausgeschlossen. Die Gewährleistung für Mängel wird — soweit gesetzlich zulässig — wegbedungen.</div>
+				<div class="doc-clause"><strong>4. Haftung</strong>Mit der Übergabe gehen Nutzen und Gefahr auf die Käuferschaft über.</div>
+				<div class="doc-place" style="text-align:left;margin-top:1.25rem;"><?php echo rf_bind( 'brief_ort', 'Ort' ); // phpcs:ignore ?>, <mark data-bind="__today" data-today><?php echo esc_html( date_i18n( 'j. F Y' ) ); ?></mark></div>
+				<div class="doc-sign" style="display:flex;gap:2rem;">
+					<div class="line" style="flex:1;">Verkäufer/in</div>
+					<div class="line" style="flex:1;">Käufer/in</div>
+				</div>
+			</div>
+			<div class="rf-note"><?php echo rf_icon( 'scale' ); // phpcs:ignore ?><span>Erstellen Sie den Vertrag zweifach (je ein Original pro Partei). Vergessen Sie nicht die Ummeldung beim Strassenverkehrsamt und die Anpassung der Versicherung.</span></div>
 		</div>
 	</div>
 <?php }
