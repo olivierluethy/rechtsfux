@@ -123,6 +123,20 @@ function rf_open_graph() {
 add_action( 'wp_head', 'rf_open_graph', 4 );
 
 /**
+ * robots.txt sinnvoll ergänzen. Den Sitemap-Verweis fügt WordPress-Core
+ * (seit 5.5) bereits selbst hinzu — wir ergänzen nur Disallow-Regeln.
+ */
+function rf_robots_txt( $output, $public ) {
+	if ( '0' === (string) $public ) {
+		return $output; // Site nicht öffentlich — nichts ergänzen.
+	}
+	$output .= "Disallow: /wp-login.php\n";
+	$output .= "Disallow: /*?s=\n"; // interne Suchergebnisse nicht indexieren
+	return $output;
+}
+add_filter( 'robots_txt', 'rf_robots_txt', 10, 2 );
+
+/**
  * URL einer Seite anhand ihres Slugs (Kind- und Top-Level).
  */
 function rf_url( $slug ) {
