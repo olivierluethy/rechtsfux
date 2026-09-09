@@ -35,6 +35,9 @@ function rf_render_document( $type ) {
 		case 'untermietvertrag':
 			rf_doc_untermietvertrag();
 			break;
+		case 'maengelruege':
+			rf_doc_maengelruege();
+			break;
 		case 'kuendigung-wohnung':
 		default:
 			rf_doc_kuendigung_wohnung();
@@ -477,6 +480,80 @@ function rf_doc_untermietvertrag() { ?>
 				</div>
 			</div>
 			<div class="rf-note"><?php echo rf_icon( 'shield' ); // phpcs:ignore ?><span>Untervermietung braucht in der Regel die Zustimmung der Vermieterschaft. Der Untermietzins darf nicht missbräuchlich über Ihrem eigenen liegen.</span></div>
+		</div>
+	</div>
+<?php }
+
+/* ------------------------------------------------------------------ */
+function rf_doc_maengelruege() { ?>
+	<div class="rf-doc" data-doc="maengelruege">
+		<form class="rf-form" autocomplete="off" onsubmit="return false;">
+			<fieldset class="rf-fieldset">
+				<legend>Ihre Angaben</legend>
+				<div class="rf-field-row">
+					<div class="rf-field"><label>Vorname</label><input class="rf-input" name="abs_vorname" placeholder="Anna"></div>
+					<div class="rf-field"><label>Nachname</label><input class="rf-input" name="abs_nachname" placeholder="Muster"></div>
+				</div>
+				<div class="rf-field"><label>Strasse &amp; Nr.</label><input class="rf-input" name="abs_strasse" placeholder="Bahnhofstrasse 1"></div>
+				<div class="rf-field-row">
+					<div class="rf-field"><label>PLZ</label><input class="rf-input" name="abs_plz" placeholder="8001"></div>
+					<div class="rf-field"><label>Ort</label><input class="rf-input" name="abs_ort" placeholder="Zürich"></div>
+				</div>
+			</fieldset>
+			<fieldset class="rf-fieldset">
+				<legend>Empfänger (Verkäufer / Anbieter)</legend>
+				<div class="rf-field"><label>Firma / Name</label><input class="rf-input" name="emp_name" placeholder="Beispiel Shop AG"></div>
+				<div class="rf-field"><label>Strasse &amp; Nr.</label><input class="rf-input" name="emp_strasse" placeholder="Handelsweg 3"></div>
+				<div class="rf-field-row">
+					<div class="rf-field"><label>PLZ</label><input class="rf-input" name="emp_plz" placeholder="8004"></div>
+					<div class="rf-field"><label>Ort</label><input class="rf-input" name="emp_ort" placeholder="Zürich"></div>
+				</div>
+			</fieldset>
+			<fieldset class="rf-fieldset">
+				<legend>Mangel</legend>
+				<div class="rf-field"><label>Gegenstand / Bestellung <span class="rf-help">Artikel, Rechnungs- oder Bestellnummer</span></label><input class="rf-input" name="gegenstand" placeholder="Kaffeemaschine, Rechnung Nr. 12345"></div>
+				<div class="rf-field"><label>Beschreibung des Mangels</label><textarea class="rf-textarea" name="mangel" placeholder="Das Gerät heizt nicht mehr auf und schaltet sich nach kurzer Zeit ab."></textarea></div>
+				<div class="rf-field-row">
+					<div class="rf-field"><label>Frist zur Behebung bis</label><input class="rf-input" type="date" name="frist"></div>
+					<div class="rf-field"><label>Ort/Datum</label><input class="rf-input" name="brief_ort" placeholder="Zürich"></div>
+				</div>
+			</fieldset>
+		</form>
+
+		<div class="rf-preview-wrap">
+			<div class="rf-preview-bar">
+				<span class="rf-preview-bar__label"><?php echo rf_icon( 'pen' ); // phpcs:ignore ?> Live-Vorschau</span>
+				<div class="rf-preview-actions">
+					<button class="rf-btn rf-btn--ghost rf-print" type="button"><?php echo rf_icon( 'print' ); // phpcs:ignore ?> Drucken</button>
+					<button class="rf-btn rf-btn--soft rf-copy" type="button"><?php echo rf_icon( 'copy' ); // phpcs:ignore ?> Kopieren</button>
+				</div>
+			</div>
+			<div class="rf-preview" data-preview>
+				<div class="doc-sender">
+					<?php echo rf_bind( 'abs_vorname', 'Vorname' ); // phpcs:ignore ?> <?php echo rf_bind( 'abs_nachname', 'Nachname' ); // phpcs:ignore ?><br>
+					<?php echo rf_bind( 'abs_strasse', 'Strasse Nr.' ); // phpcs:ignore ?><br>
+					<?php echo rf_bind( 'abs_plz', 'PLZ' ); // phpcs:ignore ?> <?php echo rf_bind( 'abs_ort', 'Ort' ); // phpcs:ignore ?>
+				</div>
+				<div class="doc-recipient">
+					<?php echo rf_bind( 'emp_name', 'Firma / Name' ); // phpcs:ignore ?><br>
+					<?php echo rf_bind( 'emp_strasse', 'Strasse Nr.' ); // phpcs:ignore ?><br>
+					<?php echo rf_bind( 'emp_plz', 'PLZ' ); // phpcs:ignore ?> <?php echo rf_bind( 'emp_ort', 'Ort' ); // phpcs:ignore ?>
+				</div>
+				<div class="doc-place"><?php echo rf_bind( 'brief_ort', 'Ort' ); // phpcs:ignore ?>, <mark data-bind="__today" data-today><?php echo esc_html( date_i18n( 'j. F Y' ) ); ?></mark></div>
+				<div class="doc-subject">Mängelrüge — <?php echo rf_bind( 'gegenstand', 'Gegenstand / Bestellung' ); // phpcs:ignore ?></div>
+				<div class="doc-body">
+					<p>Sehr geehrte Damen und Herren</p>
+					<p>Am oben genannten Kaufgegenstand habe ich folgenden Mangel festgestellt:</p>
+					<p><em><mark data-bind="mangel" data-empty="[Beschreibung des Mangels]">[Beschreibung des Mangels]</mark></em></p>
+					<p>Ich rüge diesen Mangel hiermit fristgerecht und fordere Sie auf, ihn bis spätestens <strong><mark data-bind="frist" data-empty="[Frist]" data-date>[Frist]</mark></strong> kostenlos zu beheben oder Ersatz zu leisten. Andernfalls behalte ich mir weitere Schritte (Minderung, Wandelung oder Schadenersatz) vor.</p>
+					<p>Bitte bestätigen Sie mir den Eingang dieses Schreibens.</p>
+					<p>Freundliche Grüsse</p>
+				</div>
+				<div class="doc-sign">
+					<div class="line"><?php echo rf_bind( 'abs_vorname', 'Vorname' ); // phpcs:ignore ?> <?php echo rf_bind( 'abs_nachname', 'Nachname' ); // phpcs:ignore ?></div>
+				</div>
+			</div>
+			<div class="rf-note"><?php echo rf_icon( 'clock' ); // phpcs:ignore ?><span>Rügen Sie Mängel sofort nach Entdeckung — bei Verzug gilt die Sache als genehmigt. Senden Sie das Schreiben eingeschrieben und bewahren Sie eine Kopie auf.</span></div>
 		</div>
 	</div>
 <?php }
