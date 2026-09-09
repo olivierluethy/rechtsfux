@@ -92,7 +92,7 @@ function rf_ia() {
 			'slug'     => 'tools',
 			'label'    => 'Tools',
 			'nav'      => 'Tools',
-			'tagline'  => 'Drei Rechner, die sofort rechnen — ohne Anmeldung.',
+			'tagline'  => 'Vier Rechner, die sofort rechnen — ohne Anmeldung.',
 			'icon'     => 'calculator',
 			'template' => 'tools',
 			'featured' => null,

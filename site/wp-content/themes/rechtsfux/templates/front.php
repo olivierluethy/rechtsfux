@@ -105,7 +105,7 @@ get_header();
 			<div class="rf-split__text">
 				<span class="rf-tick"><?php echo rf_icon( 'calculator' ); // phpcs:ignore ?> Rechner</span>
 				<h2>Zahlen, die sofort stimmen</h2>
-				<p class="rf-sub">Drei kleine Helfer für grosse Fragen — ganz ohne Anmeldung, direkt im Browser gerechnet.</p>
+				<p class="rf-sub">Vier kleine Helfer für grosse Fragen — ganz ohne Anmeldung, direkt im Browser gerechnet.</p>
 				<a class="rf-btn rf-btn--primary" style="margin-top:1.25rem;" href="<?php echo esc_url( rf_url( 'tools' ) ); ?>">Zu den Tools <?php echo rf_icon( 'arrow' ); // phpcs:ignore ?></a>
 			</div>
 			<div class="rf-split__media">
@@ -123,6 +123,11 @@ get_header();
 					<a class="rf-tool-row" href="<?php echo esc_url( rf_url( 'tools#mwst' ) ); ?>">
 						<span class="rf-tool-row__ico"><?php echo rf_icon( 'calculator' ); // phpcs:ignore ?></span>
 						<span><strong>MwSt-Rechner</strong><span>Brutto ↔ Netto, Schweizer Sätze</span></span>
+						<?php echo rf_icon( 'arrow' ); // phpcs:ignore ?>
+					</a>
+					<a class="rf-tool-row" href="<?php echo esc_url( rf_url( 'tools#lohn' ) ); ?>">
+						<span class="rf-tool-row__ico"><?php echo rf_icon( 'contract' ); // phpcs:ignore ?></span>
+						<span><strong>Lohnrechner</strong><span>Anteiliger 13. Monatslohn</span></span>
 						<?php echo rf_icon( 'arrow' ); // phpcs:ignore ?>
 					</a>
 				</div>

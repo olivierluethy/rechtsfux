@@ -18,7 +18,7 @@ get_header();
 		</nav>
 		<div class="rf-pagehead__ico"><?php echo rf_icon( 'calculator' ); // phpcs:ignore ?></div>
 		<h1>Rechner, die sofort rechnen</h1>
-		<p class="rf-sub">Drei kleine Helfer für den Schweizer Alltag — ohne Anmeldung, direkt in Ihrem Browser. Werte gelten als Orientierung ohne Gewähr.</p>
+		<p class="rf-sub">Vier kleine Helfer für den Schweizer Alltag — ohne Anmeldung, direkt in Ihrem Browser. Werte gelten als Orientierung ohne Gewähr.</p>
 	</div>
 </section>
 
