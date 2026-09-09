@@ -1,0 +1,37 @@
+name: PHP Lint
+
+# Prüft bei jedem Push und Pull Request die Syntax aller eigenen PHP-Dateien.
+# (WordPress-Core ist nicht im Repo; php -l prüft nur Syntax, führt nichts aus.)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: PHP einrichten
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+
+      - name: Eigene PHP-Dateien linten
+        run: |
+          set -euo pipefail
+          status=0
+          # Alle versionierten PHP-Dateien (Theme + Konfig + Skripte) prüfen.
+          while IFS= read -r -d '' f; do
+            if ! php -l "$f" > /dev/null 2>&1; then
+              echo "::error file=$f::PHP-Syntaxfehler"
+              php -l "$f" || true
+              status=1
+            fi
+          done < <(git ls-files -z '*.php')
+          if [ "$status" -eq 0 ]; then
+            echo "✓ Keine Syntaxfehler in $(git ls-files '*.php' | wc -l | tr -d ' ') PHP-Dateien."
+          fi
+          exit $status
