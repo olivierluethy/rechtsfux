@@ -16,7 +16,8 @@ defined( 'ABSPATH' ) || exit;
 		/* Theme vor dem Paint setzen — kein Flash. */
 		(function () {
 			try {
-				var t = localStorage.getItem('rf-theme');
+				var q = new URLSearchParams(location.search).get('rf-theme');
+				var t = (q === 'dark' || q === 'light') ? q : localStorage.getItem('rf-theme');
 				if (t === 'dark' || t === 'light') {
 					document.documentElement.setAttribute('data-theme', t);
 				}
