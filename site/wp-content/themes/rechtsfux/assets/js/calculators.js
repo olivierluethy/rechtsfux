@@ -131,4 +131,23 @@
 		satz.addEventListener('change', render);
 		render();
 	})();
+
+	/* ===================== LOHN (13. Monatslohn) ===================== */
+	(function () {
+		if (!el('lohn')) return;
+		var betrag = el('lohn_betrag'), monate = el('lohn_monate'), out = el('lohn_out');
+		function render() {
+			var m = Math.max(0, parseFloat(betrag.value) || 0);
+			var months = Math.min(12, Math.max(0, parseInt(monate.value, 10) || 0));
+			var anteilig = m * months / 12;
+			out.innerHTML = row(null, fmtChf(anteilig), true) +
+				'<div style="color:var(--ink-3);font-size:.82rem;margin:-.2rem 0 .4rem;">Anteiliger 13. Monatslohn</div>' +
+				row('Voller 13. Monatslohn', fmtChf(m)) +
+				row('Beschäftigung', months + ' von 12 Monaten') +
+				row('Pro Monat zurückstellen', fmtChf(m / 12));
+		}
+		betrag.addEventListener('input', render);
+		monate.addEventListener('input', render);
+		render();
+	})();
 })();

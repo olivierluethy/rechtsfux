@@ -99,6 +99,22 @@ get_header();
 			</div>
 		</div>
 
+		<!-- ============ LOHN (13. ML) ============ -->
+		<div class="rf-calc" id="lohn" data-calc="lohn">
+			<div class="rf-calc__head">
+				<span class="rf-calc__ico"><?php echo rf_icon( 'contract' ); // phpcs:ignore ?></span>
+				<div><h3>Lohnrechner: 13. Monatslohn</h3><p>Anteiliger 13. Monatslohn bei unterjährigem Ein- oder Austritt</p></div>
+			</div>
+			<div class="rf-calc__grid">
+				<div>
+					<div class="rf-field"><label>Bruttomonatslohn (CHF)</label><input class="rf-input" type="number" id="lohn_betrag" value="6500" min="0" step="50"></div>
+					<div class="rf-field"><label>Beschäftigungsmonate im Jahr</label><input class="rf-input" type="number" id="lohn_monate" value="12" min="1" max="12"></div>
+				</div>
+				<div class="rf-result" id="lohn_out"></div>
+			</div>
+			<div class="rf-note"><?php echo rf_icon( 'clock' ); // phpcs:ignore ?><span>Ein 13. Monatslohn ist nur geschuldet, wenn er vereinbart ist. Bei unterjährigem Ein- oder Austritt wird er in der Regel anteilig (pro rata) ausbezahlt.</span></div>
+		</div>
+
 	</div>
 </section>
 

@@ -100,6 +100,7 @@ function rf_ia() {
 				array( 'label' => 'Erbschaftsrechner', 'slug' => 'tools#erbschaft', 'desc' => 'Gesetzliche Erbteile und Pflichtteile berechnen.', 'ready' => true ),
 				array( 'label' => 'Bussenrechner', 'slug' => 'tools#busse', 'desc' => 'Bussen für Tempo­überschreitungen abschätzen.', 'ready' => true ),
 				array( 'label' => 'MwSt-Rechner', 'slug' => 'tools#mwst', 'desc' => 'Brutto/Netto mit Schweizer Sätzen.', 'ready' => true ),
+				array( 'label' => 'Lohnrechner (13. ML)', 'slug' => 'tools#lohn', 'desc' => 'Anteiligen 13. Monatslohn berechnen.', 'ready' => true ),
 			),
 		),
 		array(
