@@ -1,0 +1,18 @@
+# Git & Doku-Assets nicht in den Build-Kontext
+.git
+.github
+docs/screenshots
+tests
+*.log
+**/.DS_Store
+
+# WordPress-Core & Laufzeit ausschliessen — setup.sh beschafft sie im Build.
+site/*
+!site/wp-config.php
+!site/router.php
+!site/rf-seed.php
+!site/wp-content
+site/wp-content/*
+!site/wp-content/themes
+site/wp-content/themes/*
+!site/wp-content/themes/rechtsfux
