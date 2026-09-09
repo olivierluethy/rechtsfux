@@ -30,7 +30,7 @@ function rf_ia() {
 			'featured' => 'wohnung-kuendigen',
 			'items'    => array(
 				array( 'label' => 'Wohnung kündigen', 'slug' => 'wohnung-kuendigen', 'desc' => 'Mietvertrag fristgerecht beenden, mit Termin-Rechner.', 'ready' => true ),
-				array( 'label' => 'Arbeitsstelle kündigen', 'slug' => 'arbeitsstelle-kuendigen', 'desc' => 'Ordentliche Kündigung mit korrekter Frist.', 'ready' => false ),
+				array( 'label' => 'Arbeitsstelle kündigen', 'slug' => 'arbeitsstelle-kuendigen', 'desc' => 'Ordentliche Kündigung mit korrekter Frist.', 'ready' => true ),
 				array( 'label' => 'Parkplatz kündigen', 'slug' => 'parkplatz-kuendigen', 'desc' => 'Stellplatz oder Garage abmelden.', 'ready' => false ),
 				array( 'label' => 'Fitness-Abo kündigen', 'slug' => 'fitness-kuendigen', 'desc' => 'Mitgliedschaft ohne Verlängerung beenden.', 'ready' => false ),
 				array( 'label' => 'Versicherung kündigen', 'slug' => 'versicherung-kuendigen', 'desc' => 'Police fristgerecht auflösen.', 'ready' => false ),
@@ -49,7 +49,7 @@ function rf_ia() {
 			'featured' => 'arbeitsvertrag',
 			'items'    => array(
 				array( 'label' => 'Arbeitsvertrag', 'slug' => 'arbeitsvertrag', 'desc' => 'Anstellung sauber regeln, inkl. Probezeit & Pensum.', 'ready' => true ),
-				array( 'label' => 'Auto-Kaufvertrag', 'slug' => 'auto-kaufvertrag', 'desc' => 'Privatverkauf ab Platz absichern.', 'ready' => false ),
+				array( 'label' => 'Auto-Kaufvertrag', 'slug' => 'auto-kaufvertrag', 'desc' => 'Privatverkauf ab Platz absichern.', 'ready' => true ),
 				array( 'label' => 'Darlehensvertrag', 'slug' => 'darlehensvertrag', 'desc' => 'Privates Darlehen mit Rückzahlung.', 'ready' => false ),
 				array( 'label' => 'Untermietvertrag', 'slug' => 'untermietvertrag', 'desc' => 'Zimmer oder Wohnung untervermieten.', 'ready' => false ),
 				array( 'label' => 'Mietvertrag Parkplatz', 'slug' => 'mietvertrag-parkplatz', 'desc' => 'Stellplatz rechtssicher vermieten.', 'ready' => false ),
@@ -152,6 +152,18 @@ function rf_documents() {
 			'parent' => 'vorsorgedokumente',
 			'doc'    => 'patientenverfuegung',
 			'lead'   => 'Halten Sie Ihre medizinischen Wünsche verbindlich fest — damit im Ernstfall nach Ihrem Willen gehandelt wird.',
+		),
+		'arbeitsstelle-kuendigen' => array(
+			'title'  => 'Arbeitsstelle kündigen',
+			'parent' => 'kuendigungsschreiben',
+			'doc'    => 'kuendigung-arbeit',
+			'lead'   => 'Kündigen Sie Ihr Arbeitsverhältnis ordentlich und fristgerecht — mit korrekter Anrede und Bitte um Bestätigung und Arbeitszeugnis.',
+		),
+		'auto-kaufvertrag' => array(
+			'title'  => 'Auto-Kaufvertrag',
+			'parent' => 'vertraege',
+			'doc'    => 'auto-kaufvertrag',
+			'lead'   => 'Ein Kaufvertrag für den privaten Verkauf eines Fahrzeugs ab Platz — klar geregelt, inklusive «gekauft wie gesehen».',
 		),
 	);
 }
