@@ -1,0 +1,12 @@
+/*
+Theme Name: Rechtsfux
+Theme URI: http://localhost:8080
+Author: Rechtsfux
+Description: Individuelles Theme für Rechtsfux — das clevere Schweizer Vertrags-Werkzeug. Schweizer Präzision, Emerald-Akzent, Dark/Light-Mode, voll responsive.
+Version: 1.0.0
+Requires at least: 6.0
+Requires PHP: 8.0
+Text Domain: rechtsfux
+*/
+
+/* Die eigentlichen Styles liegen in assets/css/main.css (per functions.php eingebunden). */
