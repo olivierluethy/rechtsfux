@@ -32,6 +32,9 @@ function rf_render_document( $type ) {
 		case 'darlehensvertrag':
 			rf_doc_darlehensvertrag();
 			break;
+		case 'untermietvertrag':
+			rf_doc_untermietvertrag();
+			break;
 		case 'kuendigung-wohnung':
 		default:
 			rf_doc_kuendigung_wohnung();
@@ -420,6 +423,60 @@ function rf_doc_darlehensvertrag() { ?>
 				</div>
 			</div>
 			<div class="rf-note"><?php echo rf_icon( 'scale' ); // phpcs:ignore ?><span>Halten Sie Rückzahlungen (z. B. Teilzahlungen) schriftlich fest und quittieren Sie sie. Bei höheren Beträgen empfiehlt sich ein klarer Ratenplan.</span></div>
+		</div>
+	</div>
+<?php }
+
+/* ------------------------------------------------------------------ */
+function rf_doc_untermietvertrag() { ?>
+	<div class="rf-doc" data-doc="untermietvertrag">
+		<form class="rf-form" autocomplete="off" onsubmit="return false;">
+			<fieldset class="rf-fieldset">
+				<legend>Parteien</legend>
+				<div class="rf-field"><label>Untervermieter/in (Name, Ort)</label><input class="rf-input" name="uv" placeholder="Anna Muster, Zürich"></div>
+				<div class="rf-field"><label>Untermieter/in (Name, Ort)</label><input class="rf-input" name="um" placeholder="Peter Beispiel, Zürich"></div>
+			</fieldset>
+			<fieldset class="rf-fieldset">
+				<legend>Mietobjekt</legend>
+				<div class="rf-field"><label>Adresse des Objekts</label><input class="rf-input" name="objekt" placeholder="Bahnhofstrasse 1, 8001 Zürich"></div>
+				<div class="rf-field"><label>Umfang <span class="rf-help">z. B. 1 Zimmer, möbliert, Mitbenutzung Bad/Küche</span></label><input class="rf-input" name="umfang" placeholder="1 möbliertes Zimmer, Mitbenutzung Bad und Küche"></div>
+			</fieldset>
+			<fieldset class="rf-fieldset">
+				<legend>Mietzins &amp; Dauer</legend>
+				<div class="rf-field-row">
+					<div class="rf-field"><label>Mietzins (CHF/Monat)</label><input class="rf-input" name="zins" placeholder="800"></div>
+					<div class="rf-field"><label>Mietbeginn</label><input class="rf-input" type="date" name="beginn"></div>
+				</div>
+				<div class="rf-field-row">
+					<div class="rf-field"><label>Befristet bis <span class="rf-help">leer = unbefristet</span></label><input class="rf-input" type="date" name="ende"></div>
+					<div class="rf-field"><label>Ort/Datum</label><input class="rf-input" name="brief_ort" placeholder="Zürich"></div>
+				</div>
+			</fieldset>
+		</form>
+
+		<div class="rf-preview-wrap">
+			<div class="rf-preview-bar">
+				<span class="rf-preview-bar__label"><?php echo rf_icon( 'pen' ); // phpcs:ignore ?> Live-Vorschau</span>
+				<div class="rf-preview-actions">
+					<button class="rf-btn rf-btn--ghost rf-print" type="button"><?php echo rf_icon( 'print' ); // phpcs:ignore ?> Drucken</button>
+					<button class="rf-btn rf-btn--soft rf-copy" type="button"><?php echo rf_icon( 'copy' ); // phpcs:ignore ?> Kopieren</button>
+				</div>
+			</div>
+			<div class="rf-preview" data-preview>
+				<h4 class="doc-title">Untermietvertrag</h4>
+				<p>zwischen <strong><?php echo rf_bind( 'uv', 'Untervermieter/in' ); // phpcs:ignore ?></strong> (Untervermieter/in)</p>
+				<p>und <strong><?php echo rf_bind( 'um', 'Untermieter/in' ); // phpcs:ignore ?></strong> (Untermieter/in)</p>
+				<div class="doc-clause"><strong>1. Mietobjekt</strong>Untervermietet wird an <?php echo rf_bind( 'objekt', 'Adresse' ); // phpcs:ignore ?>: <?php echo rf_bind( 'umfang', 'Umfang' ); // phpcs:ignore ?>.</div>
+				<div class="doc-clause"><strong>2. Mietzins</strong>Der monatliche Mietzins beträgt CHF <?php echo rf_bind( 'zins', 'Betrag' ); // phpcs:ignore ?> und ist jeweils im Voraus zu bezahlen.</div>
+				<div class="doc-clause"><strong>3. Mietdauer</strong>Das Untermietverhältnis beginnt am <mark data-bind="beginn" data-empty="[Datum]" data-date>[Datum]</mark> und dauert bis <mark data-bind="ende" data-empty="auf Weiteres (unbefristet)" data-date>auf Weiteres (unbefristet)</mark>.</div>
+				<div class="doc-clause"><strong>4. Zustimmung</strong>Die Untervermietung erfolgt mit Zustimmung der Hauptvermieterschaft. Für die Rückgabe im vertragsgemässen Zustand ist die untermietende Partei verantwortlich.</div>
+				<div class="doc-place" style="text-align:left;margin-top:1.25rem;"><?php echo rf_bind( 'brief_ort', 'Ort' ); // phpcs:ignore ?>, <mark data-bind="__today" data-today><?php echo esc_html( date_i18n( 'j. F Y' ) ); ?></mark></div>
+				<div class="doc-sign" style="display:flex;gap:2rem;">
+					<div class="line" style="flex:1;">Untervermieter/in</div>
+					<div class="line" style="flex:1;">Untermieter/in</div>
+				</div>
+			</div>
+			<div class="rf-note"><?php echo rf_icon( 'shield' ); // phpcs:ignore ?><span>Untervermietung braucht in der Regel die Zustimmung der Vermieterschaft. Der Untermietzins darf nicht missbräuchlich über Ihrem eigenen liegen.</span></div>
 		</div>
 	</div>
 <?php }
