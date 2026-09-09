@@ -50,8 +50,8 @@ function rf_ia() {
 			'items'    => array(
 				array( 'label' => 'Arbeitsvertrag', 'slug' => 'arbeitsvertrag', 'desc' => 'Anstellung sauber regeln, inkl. Probezeit & Pensum.', 'ready' => true ),
 				array( 'label' => 'Auto-Kaufvertrag', 'slug' => 'auto-kaufvertrag', 'desc' => 'Privatverkauf ab Platz absichern.', 'ready' => true ),
-				array( 'label' => 'Darlehensvertrag', 'slug' => 'darlehensvertrag', 'desc' => 'Privates Darlehen mit Rückzahlung.', 'ready' => false ),
-				array( 'label' => 'Untermietvertrag', 'slug' => 'untermietvertrag', 'desc' => 'Zimmer oder Wohnung untervermieten.', 'ready' => false ),
+				array( 'label' => 'Darlehensvertrag', 'slug' => 'darlehensvertrag', 'desc' => 'Privates Darlehen mit Rückzahlung.', 'ready' => true ),
+				array( 'label' => 'Untermietvertrag', 'slug' => 'untermietvertrag', 'desc' => 'Zimmer oder Wohnung untervermieten.', 'ready' => true ),
 				array( 'label' => 'Mietvertrag Parkplatz', 'slug' => 'mietvertrag-parkplatz', 'desc' => 'Stellplatz rechtssicher vermieten.', 'ready' => false ),
 				array( 'label' => 'Schenkungsvertrag', 'slug' => 'schenkungsvertrag', 'desc' => 'Schenkung klar dokumentieren.', 'ready' => false ),
 			),
@@ -78,9 +78,9 @@ function rf_ia() {
 			'tagline'  => 'Wenn ein klarer Brief mehr bewegt als ein langes Gespräch.',
 			'icon'     => 'letter',
 			'template' => 'category',
-			'featured' => null,
+			'featured' => 'maengelruege',
 			'items'    => array(
-				array( 'label' => 'Mängelrüge', 'slug' => 'maengelruege', 'desc' => 'Mängel fristgerecht und beweisbar melden.', 'ready' => false ),
+				array( 'label' => 'Mängelrüge', 'slug' => 'maengelruege', 'desc' => 'Mängel fristgerecht und beweisbar melden.', 'ready' => true ),
 				array( 'label' => 'Einsprache Bussenverfügung', 'slug' => 'einsprache-busse', 'desc' => 'Gegen eine Busse Einsprache erheben.', 'ready' => false ),
 				array( 'label' => 'Mietzins anfechten', 'slug' => 'mietzins-anfechten', 'desc' => 'Ungerechtfertigte Erhöhung anfechten.', 'ready' => false ),
 				array( 'label' => 'Zahlungsaufforderung', 'slug' => 'zahlungsaufforderung', 'desc' => 'Offene Forderung höflich, aber klar einfordern.', 'ready' => false ),
@@ -164,6 +164,24 @@ function rf_documents() {
 			'parent' => 'vertraege',
 			'doc'    => 'auto-kaufvertrag',
 			'lead'   => 'Ein Kaufvertrag für den privaten Verkauf eines Fahrzeugs ab Platz — klar geregelt, inklusive «gekauft wie gesehen».',
+		),
+		'darlehensvertrag' => array(
+			'title'  => 'Darlehensvertrag',
+			'parent' => 'vertraege',
+			'doc'    => 'darlehensvertrag',
+			'lead'   => 'Ein privates Darlehen sauber festhalten — mit Betrag, Zins und Rückzahlung.',
+		),
+		'untermietvertrag' => array(
+			'title'  => 'Untermietvertrag',
+			'parent' => 'vertraege',
+			'doc'    => 'untermietvertrag',
+			'lead'   => 'Zimmer oder Wohnung rechtssicher untervermieten — mit Mietzins und Dauer.',
+		),
+		'maengelruege' => array(
+			'title'  => 'Mängelrüge',
+			'parent' => 'musterbriefe',
+			'doc'    => 'maengelruege',
+			'lead'   => 'Melden Sie einen Mangel fristgerecht und beweisbar — mit klarer Frist zur Behebung.',
 		),
 	);
 }
