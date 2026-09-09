@@ -210,7 +210,7 @@ HTML;
 }
 
 function rf_article_placeholder( $topic, $intro ) {
-	return "<p class=\"rf-lead\">$intro</p>\n<p>Dieser Ratgeber-Beitrag ist Teil der Rechtsfux-Beispielinhalte. Der vollständige Text zu «$topic» wird hier ausgearbeitet und erklärt Schritt für Schritt Ihre Rechte, Fristen und das konkrete Vorgehen.</p>\n<h2>Das Wichtigste in Kürze</h2>\n<ul><li>Reagieren Sie fristgerecht — verpasste Fristen lassen sich selten heilen.</li><li>Halten Sie alles schriftlich fest.</li><li>Nutzen Sie eine passende Vorlage von Rechtsfux als Ausgangspunkt.</li></ul>\n<p><em>Dieser Beitrag dient der allgemeinen Information und ersetzt keine Rechtsberatung im Einzelfall.</em></p>";
+	return "<p class=\"rf-lead\">{$intro}</p>\n<p>Dieser Ratgeber-Beitrag ist Teil der Rechtsfux-Beispielinhalte. Der vollständige Text zu «{$topic}» wird hier ausgearbeitet und erklärt Schritt für Schritt Ihre Rechte, Fristen und das konkrete Vorgehen.</p>\n<h2>Das Wichtigste in Kürze</h2>\n<ul><li>Reagieren Sie fristgerecht — verpasste Fristen lassen sich selten heilen.</li><li>Halten Sie alles schriftlich fest.</li><li>Nutzen Sie eine passende Vorlage von Rechtsfux als Ausgangspunkt.</li></ul>\n<p><em>Dieser Beitrag dient der allgemeinen Information und ersetzt keine Rechtsberatung im Einzelfall.</em></p>";
 }
 
 function rf_legal_impressum() {
