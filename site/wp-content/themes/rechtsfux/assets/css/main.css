@@ -375,3 +375,91 @@ strong { font-weight: 700; }
 .rf-cat:hover .rf-cat__more svg { transform: translateX(4px); }
 .rf-cat__link { position: absolute; inset: 0; z-index: 3; text-indent: -9999px; }
 
+/* ==========================================================================
+   Split-Sektion (Tools-Teaser / Rechtsschutz)
+   ========================================================================== */
+.rf-split { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(1.5rem, 4vw, 3.5rem); align-items: center; }
+.rf-split--rev .rf-split__media { order: -1; }
+.rf-panel {
+	background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg);
+	box-shadow: var(--shadow-md); padding: clamp(1.25rem, 3vw, 2rem);
+}
+.rf-panel--accent { background: linear-gradient(160deg, var(--accent) 0%, var(--accent-2) 100%); color: var(--accent-ink); border: 0; }
+.rf-panel--accent h3, .rf-panel--accent h2 { color: var(--accent-ink); }
+.rf-mini-list { list-style: none; margin: 0; padding: 0; display: grid; gap: .7rem; }
+.rf-mini-list li { display: flex; align-items: flex-start; gap: .6rem; color: var(--ink-2); }
+.rf-mini-list li svg { width: 22px; height: 22px; color: var(--accent); flex: none; margin-top: 1px; }
+
+/* Rechner-Vorschaukärtchen im Teaser */
+.rf-tool-preview { display: grid; gap: .7rem; }
+.rf-tool-row { display: flex; align-items: center; gap: .8rem; padding: .85rem 1rem; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface-2); transition: border-color .2s var(--ease), transform .2s var(--ease); }
+.rf-tool-row:hover { border-color: var(--accent); transform: translateX(4px); }
+.rf-tool-row__ico { width: 40px; height: 40px; display: grid; place-items: center; border-radius: var(--r-xs); background: var(--accent-soft); color: var(--accent); flex: none; }
+.rf-tool-row strong { display: block; color: var(--ink); }
+.rf-tool-row span { color: var(--ink-3); font-size: .86rem; }
+.rf-tool-row .rf-icon--arrow { margin-left: auto; color: var(--ink-3); width: 18px; }
+
+/* ==========================================================================
+   Ratgeber-Karten
+   ========================================================================== */
+.rf-posts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.15rem; margin-top: 2.5rem; }
+.rf-post {
+	display: flex; flex-direction: column;
+	background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden;
+	transition: transform .25s var(--ease), box-shadow .25s var(--ease), border-color .25s var(--ease);
+}
+.rf-post:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--line-2); }
+.rf-post__thumb { aspect-ratio: 16/9; position: relative; background: linear-gradient(135deg, var(--accent-soft), var(--surface-2)); display: grid; place-items: center; }
+.rf-post__thumb svg { width: 46px; height: 46px; color: var(--accent); opacity: .8; }
+.rf-post__body { padding: 1.3rem; display: flex; flex-direction: column; gap: .5rem; flex: 1; }
+.rf-post__meta { display: flex; align-items: center; gap: .7rem; font-size: .82rem; color: var(--ink-3); }
+.rf-tag { color: var(--accent-2); background: var(--accent-soft); padding: .18rem .55rem; border-radius: 20px; font-weight: 600; font-size: .76rem; }
+.rf-post h3 { margin: 0; font-size: 1.15rem; }
+.rf-post p { color: var(--ink-2); font-size: .92rem; margin: 0; flex: 1; }
+.rf-post__link { position: absolute; inset: 0; z-index: 3; text-indent: -9999px; }
+.rf-post { position: relative; }
+
+/* ==========================================================================
+   FAQ
+   ========================================================================== */
+.rf-faq { max-width: 800px; margin-top: 2.25rem; }
+.rf-faq__item { border: 1px solid var(--line); border-radius: var(--r); margin-bottom: .75rem; background: var(--surface); overflow: hidden; transition: border-color .2s var(--ease); }
+.rf-faq__item.is-open { border-color: var(--accent); }
+.rf-faq__q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.15rem 1.35rem; background: transparent; border: 0; cursor: pointer; text-align: left; font-family: var(--font-display); font-weight: 700; font-size: 1.06rem; color: var(--ink); }
+.rf-faq__q svg { width: 22px; height: 22px; color: var(--accent); flex: none; transition: transform .25s var(--ease); }
+.rf-faq__item.is-open .rf-faq__q svg { transform: rotate(180deg); }
+.rf-faq__a { max-height: 0; overflow: hidden; transition: max-height .3s var(--ease); }
+.rf-faq__a-inner { padding: 0 1.35rem 1.25rem; color: var(--ink-2); }
+.rf-faq__item.is-open .rf-faq__a { max-height: 320px; }
+
+/* ==========================================================================
+   CTA-Block
+   ========================================================================== */
+.rf-cta { position: relative; overflow: hidden; border-radius: var(--r-xl); padding: clamp(2.5rem, 2rem + 4vw, 4.5rem) clamp(1.5rem, 4vw, 3.5rem); background: linear-gradient(150deg, #0E2A22 0%, #0A3A2E 55%, #0E7C66 130%); color: #EAF5F0; text-align: center; }
+:root[data-theme="dark"] .rf-cta { background: linear-gradient(150deg, #0A1B16 0%, #0E332A 60%, #12463A 130%); }
+.rf-cta__grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px); background-size: 40px 40px; mask-image: radial-gradient(80% 100% at 50% 0, #000, transparent 75%); }
+.rf-cta > * { position: relative; z-index: 1; }
+.rf-cta h2 { color: #fff; margin-bottom: .6rem; }
+.rf-cta p { color: rgba(234,245,240,.8); max-width: 52ch; margin: 0 auto 1.75rem; }
+.rf-cta .rf-btn--primary { background: #fff; color: #0E2A22; }
+.rf-cta .rf-btn--primary:hover { background: #EAF5F0; color: #0E2A22; }
+.rf-cta .rf-btn--ghost { border-color: rgba(255,255,255,.35); color: #fff; }
+.rf-cta .rf-btn--ghost:hover { border-color: #fff; color: #fff; background: rgba(255,255,255,.08); }
+.rf-cta__actions { display: flex; gap: .8rem; justify-content: center; flex-wrap: wrap; }
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.rf-footer { background: var(--bg-2); border-top: 1px solid var(--line); padding-block: clamp(2.5rem, 2rem + 3vw, 4rem) 2rem; margin-top: 2rem; }
+.rf-footer__top { display: grid; grid-template-columns: 1.6fr repeat(3, 1fr); gap: 2rem; }
+.rf-footer__brand p { color: var(--ink-2); font-size: .93rem; max-width: 34ch; margin-top: .9rem; }
+.rf-footer__col h4 { font-family: var(--font-display); font-size: .95rem; margin-bottom: .9rem; color: var(--ink); }
+.rf-footer__col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .55rem; }
+.rf-footer__col a { color: var(--ink-2); font-size: .92rem; }
+.rf-footer__col a:hover { color: var(--accent); }
+.rf-footer__bottom { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--line); color: var(--ink-3); font-size: .86rem; }
+.rf-footer__bottom a { color: var(--ink-3); }
+.rf-footer__bottom a:hover { color: var(--accent); }
+.rf-footer__swiss { display: inline-flex; align-items: center; gap: .4rem; }
+.rf-footer__swiss svg { width: 16px; height: 16px; color: var(--amber); }
+
