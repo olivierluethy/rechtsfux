@@ -283,7 +283,7 @@ function rf_doc_kuendigung_arbeit() { ?>
 				<legend>Kündigung</legend>
 				<div class="rf-field"><label>Eintrittsdatum <span class="rf-help">für die Fristberechnung nach OR</span></label><input class="rf-input" type="date" name="eintritt"></div>
 				<div class="rf-field-row">
-					<div class="rf-field"><label>Kündigung per <span class="rf-help">wird berechnet, überschreibbar</span></label><input class="rf-input" type="date" name="termin"></div>
+					<div class="rf-field"><label>Beendigung per <span class="rf-help">letzter Arbeitstag · wird berechnet, überschreibbar</span></label><input class="rf-input" type="date" name="termin"></div>
 					<div class="rf-field"><label>Ort/Datum des Schreibens</label><input class="rf-input" name="brief_ort" placeholder="Zürich"></div>
 				</div>
 				<p class="rf-help" data-frist-info style="margin:.2rem 0 0; color: var(--accent);"></p>
@@ -313,7 +313,7 @@ function rf_doc_kuendigung_arbeit() { ?>
 				<div class="doc-subject">Kündigung des Arbeitsverhältnisses</div>
 				<div class="doc-body">
 					<p>Sehr geehrte Damen und Herren</p>
-					<p>Hiermit kündige ich mein Arbeitsverhältnis ordentlich und fristgerecht per <strong><mark data-bind="termin" data-empty="[Kündigungsdatum]" data-date>[Kündigungsdatum]</mark></strong>.</p>
+					<p>Hiermit kündige ich mein Arbeitsverhältnis ordentlich und fristgerecht auf den <strong><mark data-bind="termin" data-empty="[Beendigungstermin]" data-date>[Beendigungstermin]</mark></strong>. Mein letzter Arbeitstag ist somit dieser Tag.</p>
 					<p>Ich danke Ihnen für die bisherige Zusammenarbeit. Bitte bestätigen Sie mir den Erhalt dieser Kündigung sowie das Enddatum schriftlich und stellen Sie mir ein qualifiziertes Arbeitszeugnis aus.</p>
 					<p>Freundliche Grüsse</p>
 				</div>
@@ -321,7 +321,7 @@ function rf_doc_kuendigung_arbeit() { ?>
 					<div class="line"><?php echo rf_bind( 'abs_vorname', 'Vorname' ); // phpcs:ignore ?> <?php echo rf_bind( 'abs_nachname', 'Nachname' ); // phpcs:ignore ?></div>
 				</div>
 			</div>
-			<div class="rf-note"><?php echo rf_icon( 'clock' ); // phpcs:ignore ?><span>Beachten Sie Ihre Kündigungsfrist (nach OR meist 1 Monat im 1. Dienstjahr, danach 2, ab dem 10. Jahr 3 Monate — sofern der Vertrag nichts anderes sagt) auf ein Monatsende. Senden Sie die Kündigung eingeschrieben.</span></div>
+			<div class="rf-note"><?php echo rf_icon( 'clock' ); // phpcs:ignore ?><span>Der angegebene Termin ist der <strong>Beendigungstermin</strong> (letzter Arbeitstag, i.&nbsp;d.&nbsp;R. ein Monatsende) — nicht das Versanddatum des Briefs. Damit die Frist gewahrt ist, muss die Kündigung <strong>vor</strong> Fristbeginn bei der Gegenseite eintreffen; senden Sie sie darum eingeschrieben.</span></div>
 		</div>
 	</div>
 <?php }

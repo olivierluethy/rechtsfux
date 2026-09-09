@@ -87,7 +87,7 @@
 			var frist = completedYears < 1 ? 1 : (completedYears < 9 ? 2 : 3);
 			var earliest = lastDayOfMonth(today.getFullYear(), today.getMonth() + frist);
 			info.textContent = 'Kündigungsfrist nach OR: ' + frist + ' Monat' + (frist > 1 ? 'e' : '') +
-				' auf Monatsende → frühestens per ' + earliest.toLocaleDateString('de-CH') + '.';
+				' auf Monatsende → frühestmöglicher Beendigungstermin: ' + earliest.toLocaleDateString('de-CH') + '.';
 			if (!terminTouched) {
 				termin.value = toISO(earliest);
 				termin.dispatchEvent(new Event('input', { bubbles: true }));
