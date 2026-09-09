@@ -7,7 +7,7 @@ FROM php:8.3-cli-bookworm
 
 # Systemwerkzeuge + SQLite-Erweiterung
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends curl ca-certificates unzip rsync bash \
+    && apt-get install -y --no-install-recommends curl ca-certificates unzip rsync bash libsqlite3-dev \
     && docker-php-ext-install pdo_sqlite \
     && rm -rf /var/lib/apt/lists/*
 
