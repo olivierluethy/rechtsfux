@@ -1,0 +1,31 @@
+# ─────────────────────────────────────────────────────────────
+# Rechtsfux — was NICHT versioniert wird
+#
+# WordPress-Core und das SQLite-Plugin werden nicht eingecheckt,
+# sondern von setup.sh beschafft. Die SQLite-Datenbank erzeugt der
+# Seeder (php rf-seed.php). So bleibt das Repo schlank und jeder
+# Commit dreht sich um unsere eigene Arbeit (Theme, Config, Skripte).
+# ─────────────────────────────────────────────────────────────
+
+# Alles unter site/ ignorieren …
+/site/*
+# … ausser unseren eigenen Dateien:
+!/site/wp-config.php
+!/site/router.php
+!/site/rf-seed.php
+# … und dem Theme (Ordner Schritt für Schritt freigeben):
+!/site/wp-content/
+/site/wp-content/*
+!/site/wp-content/themes/
+/site/wp-content/themes/*
+!/site/wp-content/themes/rechtsfux/
+
+# Laufzeit / Daten
+/site/wp-content/database/
+/site/wp-content/uploads/
+/site/wp-content/upgrade/
+
+# OS / Editor
+.DS_Store
+*.log
+Thumbs.db
