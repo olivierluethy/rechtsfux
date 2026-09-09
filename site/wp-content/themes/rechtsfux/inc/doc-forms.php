@@ -29,6 +29,9 @@ function rf_render_document( $type ) {
 		case 'auto-kaufvertrag':
 			rf_doc_auto_kaufvertrag();
 			break;
+		case 'darlehensvertrag':
+			rf_doc_darlehensvertrag();
+			break;
 		case 'kuendigung-wohnung':
 		default:
 			rf_doc_kuendigung_wohnung();
@@ -368,6 +371,55 @@ function rf_doc_auto_kaufvertrag() { ?>
 				</div>
 			</div>
 			<div class="rf-note"><?php echo rf_icon( 'scale' ); // phpcs:ignore ?><span>Erstellen Sie den Vertrag zweifach (je ein Original pro Partei). Vergessen Sie nicht die Ummeldung beim Strassenverkehrsamt und die Anpassung der Versicherung.</span></div>
+		</div>
+	</div>
+<?php }
+
+/* ------------------------------------------------------------------ */
+function rf_doc_darlehensvertrag() { ?>
+	<div class="rf-doc" data-doc="darlehensvertrag">
+		<form class="rf-form" autocomplete="off" onsubmit="return false;">
+			<fieldset class="rf-fieldset">
+				<legend>Parteien</legend>
+				<div class="rf-field"><label>Darlehensgeber/in (Name, Ort)</label><input class="rf-input" name="dg" placeholder="Anna Muster, Zürich"></div>
+				<div class="rf-field"><label>Darlehensnehmer/in (Name, Ort)</label><input class="rf-input" name="dn" placeholder="Peter Beispiel, Bern"></div>
+			</fieldset>
+			<fieldset class="rf-fieldset">
+				<legend>Darlehen</legend>
+				<div class="rf-field-row">
+					<div class="rf-field"><label>Darlehenssumme (CHF)</label><input class="rf-input" name="betrag" placeholder="10000"></div>
+					<div class="rf-field"><label>Zinssatz (% p.&nbsp;a.)</label><input class="rf-input" name="zins" placeholder="0" type="number" step="0.1" min="0"></div>
+				</div>
+				<div class="rf-field-row">
+					<div class="rf-field"><label>Rückzahlung bis</label><input class="rf-input" type="date" name="rueck"></div>
+					<div class="rf-field"><label>Ort/Datum</label><input class="rf-input" name="brief_ort" placeholder="Zürich"></div>
+				</div>
+			</fieldset>
+		</form>
+
+		<div class="rf-preview-wrap">
+			<div class="rf-preview-bar">
+				<span class="rf-preview-bar__label"><?php echo rf_icon( 'pen' ); // phpcs:ignore ?> Live-Vorschau</span>
+				<div class="rf-preview-actions">
+					<button class="rf-btn rf-btn--ghost rf-print" type="button"><?php echo rf_icon( 'print' ); // phpcs:ignore ?> Drucken</button>
+					<button class="rf-btn rf-btn--soft rf-copy" type="button"><?php echo rf_icon( 'copy' ); // phpcs:ignore ?> Kopieren</button>
+				</div>
+			</div>
+			<div class="rf-preview" data-preview>
+				<h4 class="doc-title">Darlehensvertrag</h4>
+				<p>zwischen <strong><?php echo rf_bind( 'dg', 'Darlehensgeber/in' ); // phpcs:ignore ?></strong> (Darlehensgeber/in)</p>
+				<p>und <strong><?php echo rf_bind( 'dn', 'Darlehensnehmer/in' ); // phpcs:ignore ?></strong> (Darlehensnehmer/in)</p>
+				<div class="doc-clause"><strong>1. Darlehenssumme</strong>Die darlehensgebende Partei gewährt ein Darlehen von CHF <?php echo rf_bind( 'betrag', 'Betrag' ); // phpcs:ignore ?>, zahlbar bei Vertragsunterzeichnung.</div>
+				<div class="doc-clause"><strong>2. Zins</strong>Das Darlehen wird mit <?php echo rf_bind( 'zins', '0' ); // phpcs:ignore ?> % pro Jahr verzinst.</div>
+				<div class="doc-clause"><strong>3. Rückzahlung</strong>Die Rückzahlung erfolgt spätestens bis zum <mark data-bind="rueck" data-empty="[Datum]" data-date>[Datum]</mark>. Vorzeitige Rückzahlungen sind jederzeit ohne Kosten möglich.</div>
+				<div class="doc-clause"><strong>4. Übriges</strong>Im Übrigen gelten die Bestimmungen des Schweizerischen Obligationenrechts (Art. 312 ff. OR).</div>
+				<div class="doc-place" style="text-align:left;margin-top:1.25rem;"><?php echo rf_bind( 'brief_ort', 'Ort' ); // phpcs:ignore ?>, <mark data-bind="__today" data-today><?php echo esc_html( date_i18n( 'j. F Y' ) ); ?></mark></div>
+				<div class="doc-sign" style="display:flex;gap:2rem;">
+					<div class="line" style="flex:1;">Darlehensgeber/in</div>
+					<div class="line" style="flex:1;">Darlehensnehmer/in</div>
+				</div>
+			</div>
+			<div class="rf-note"><?php echo rf_icon( 'scale' ); // phpcs:ignore ?><span>Halten Sie Rückzahlungen (z. B. Teilzahlungen) schriftlich fest und quittieren Sie sie. Bei höheren Beträgen empfiehlt sich ein klarer Ratenplan.</span></div>
 		</div>
 	</div>
 <?php }
