@@ -1,0 +1,38 @@
+name: Smoke Test
+
+# Baut die Seite in der CI reproduzierbar auf (setup.sh), startet den Dev-Server
+# und prüft mit tests/smoke.sh, dass alle wichtigen Seiten den erwarteten Status liefern.
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: PHP einrichten
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: pdo_sqlite, sqlite3
+
+      - name: Systemtools installieren
+        run: sudo apt-get update && sudo apt-get install -y zsh rsync
+
+      - name: WordPress aufsetzen & seeden
+        run: ./setup.sh
+
+      - name: Server starten & Smoke-Test
+        run: |
+          set -e
+          ( cd site && php -S localhost:8080 -t . router.php > /tmp/server.log 2>&1 & )
+          # Auf Bereitschaft warten (max. 30s)
+          for i in $(seq 1 30); do
+            if curl -sf http://localhost:8080/ > /dev/null; then break; fi
+            sleep 1
+          done
+          bash tests/smoke.sh http://localhost:8080
