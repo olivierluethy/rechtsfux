@@ -120,13 +120,23 @@
 		function plain(el) { return (el.textContent || '').replace(/\s+/g, ' ').trim(); }
 
 		// Unterschriftszeile: dünne Linie + kleine Beschriftung darunter.
+		// Bewusst als Tabelle mit oberem Rahmen statt als `canvas` umgesetzt:
+		// pdfmakes Browser-Build berechnet die Höhe eines canvas-Elements falsch
+		// und erzwingt dadurch einen vorzeitigen Seitenumbruch vor der Signatur.
+		// Fliess-Inhalt (Tabelle) wird korrekt gemessen → Dokument bleibt einseitig.
 		function signatureBlock(label) {
 			return {
-				width: '*',
-				stack: [
-					{ canvas: [ { type: 'line', x1: 0, y1: 0, x2: 200, y2: 0, lineWidth: 0.75, lineColor: '#b9c2bb' } ] },
-					{ text: label, fontSize: 9, color: '#55625b', margin: [0, 4, 0, 0] }
-				]
+				width: 'auto',
+				table: { widths: [200], body: [ [ { text: label, fontSize: 9, color: '#55625b', border: [false, true, false, false] } ] ] },
+				layout: {
+					hLineWidth: function () { return 0.75; },
+					hLineColor: function () { return '#b9c2bb'; },
+					vLineWidth: function () { return 0; },
+					paddingLeft: function () { return 0; },
+					paddingRight: function () { return 0; },
+					paddingTop: function () { return 3; },
+					paddingBottom: function () { return 0; }
+				}
 			};
 		}
 
@@ -160,7 +170,9 @@
 						Array.prototype.forEach.call(lines, function (ln) { cols.push(signatureBlock(plain(ln))); });
 						content.push({ columns: cols, columnGap: 24, margin: [0, 36, 0, 0] });
 					} else if (lines.length === 1) {
-						content.push({ stack: signatureBlock(plain(lines[0])).stack, margin: [0, 36, 0, 0] });
+						var sig = signatureBlock(plain(lines[0]));
+						sig.margin = [0, 36, 0, 0];
+						content.push(sig);
 					}
 				} else if (el.tagName === 'P') {
 					content.push({ text: inline(el), margin: [0, 0, 0, 10] });
