@@ -3,6 +3,26 @@
 Alle nennenswerten Änderungen an diesem Projekt. Format angelehnt an
 [Keep a Changelog](https://keepachangelog.com/de/1.1.0/).
 
+## [1.1.0] — 2026-09-10
+
+Funktionserweiterungen für die Dokument-Generatoren und Feinschliff an Suche & Layout.
+
+### Dokument-Generatoren
+- Echte PDF-Vorschau via **pdfmake + PDF.js** (Zoom, Suche) statt reiner HTML-Vorschau.
+- **Adress-Autocomplete** über die geo.admin.ch-API mit A4-PDF-Vorschau.
+
+### Suche
+- **Levenshtein-Fuzzy-Suche** (Tippfehler-Toleranz) in der Live-Suche.
+- Vorschlags-Dropdown wird nicht mehr abgeschnitten.
+
+### Layout & Responsive
+- Layout über die ganze Seite verdichtet und Responsive-Feinschliff.
+
+### Behobene Probleme
+- PDF-Signatur erzwang einen vorzeitigen Seitenumbruch — behoben.
+
+[1.1.0]: https://github.com/olivierluethy/rechtsfux/releases/tag/v1.1.0
+
 ## [1.0.0] — 2026-09-09
 
 Erste vollständige Fassung der Rechtsfux-Website (Demo).
