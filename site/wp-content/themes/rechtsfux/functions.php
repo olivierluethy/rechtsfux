@@ -9,7 +9,7 @@ defined( 'ABSPATH' ) || exit;
 
 define( 'RF_DIR', get_template_directory() );
 define( 'RF_URI', get_template_directory_uri() );
-define( 'RF_VER', '1.0.0' );
+define( 'RF_VER', '1.1.0' );
 
 require_once RF_DIR . '/inc/ia.php';
 require_once RF_DIR . '/inc/icons.php';
