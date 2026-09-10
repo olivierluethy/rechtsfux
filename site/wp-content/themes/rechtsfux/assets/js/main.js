@@ -121,35 +121,130 @@
 		Array.prototype.forEach.call(reveals, function (el) { el.classList.add('is-in'); });
 	}
 
-	/* ---------- Hero-Befehlsleiste (Suche) ---------- */
+	/* ---------- Hero-Befehlsleiste (Fuzzy-Suche, Levenshtein) ---------- */
 	var cmd = doc.querySelector('[data-command]');
 	if (cmd && window.RF_SEARCH) {
 		var input = cmd.querySelector('input');
 		var box = cmd.querySelector('.rf-command__results');
 		var idx = window.RF_SEARCH;
 		var active = -1;
+		var MAX_RESULTS = 8;      // maximale Anzahl Vorschläge
+		var SIMILAR_MIN = 0.34;   // Untergrenze, damit «ähnliche» Treffer noch relevant sind
+
+		/* Normalisiert Text: Kleinbuchstaben, Diakritika/Umlaute-Akzente weg, Satzzeichen zu Leerzeichen. */
+		function norm(s) {
+			return (s || '').toLowerCase()
+				.normalize('NFD').replace(/[̀-ͯ]/g, '')
+				.replace(/[«»„“”"'’.,;:!?()\/\-]/g, ' ')
+				.replace(/\s+/g, ' ').trim();
+		}
+
+		/* Levenshtein-Distanz (Editierabstand) zwischen zwei Zeichenketten. */
+		function levenshtein(a, b) {
+			if (a === b) return 0;
+			var al = a.length, bl = b.length;
+			if (!al) return bl;
+			if (!bl) return al;
+			var prev = new Array(bl + 1), cur = new Array(bl + 1), i, j;
+			for (j = 0; j <= bl; j++) prev[j] = j;
+			for (i = 1; i <= al; i++) {
+				cur[0] = i;
+				var ca = a.charCodeAt(i - 1);
+				for (j = 1; j <= bl; j++) {
+					var cost = ca === b.charCodeAt(j - 1) ? 0 : 1;
+					var m = prev[j] + 1, n = cur[j - 1] + 1, o = prev[j - 1] + cost;
+					cur[j] = m < n ? (m < o ? m : o) : (n < o ? n : o);
+				}
+				var tmp = prev; prev = cur; cur = tmp;
+			}
+			return prev[bl];
+		}
+
+		/* Ähnlichkeit 0..1 des Suchbegriffs q gegen ein Zielwort, mit Präfix-/Teilstring-Bonus. */
+		function similarity(q, target) {
+			if (!q || !target) return 0;
+			var pos = target.indexOf(q);
+			if (pos === 0) return 1;      // Zielwort beginnt mit q
+			if (pos > -1) return 0.93;    // q kommt irgendwo vor
+			var dist = levenshtein(q, target);
+			// Teilweise getippt: q gegen ein gleich langes Präfix des Ziels vergleichen.
+			if (target.length > q.length) {
+				var win = levenshtein(q, target.slice(0, q.length));
+				if (win < dist) dist = win;
+			}
+			return 1 - dist / Math.max(q.length, target.length);
+		}
+
+		/* Bewertet einen Indexeintrag gegen die (normalisierten) Suchwörter. */
+		function scoreItem(qWords, qFull, item) {
+			var label = norm(item.label);
+			var words = label.split(' ');
+			var cat = norm(item.cat);
+			var whole = similarity(qFull, label);          // ganzer Begriff gegen ganzes Label
+			var sum = 0;
+			for (var i = 0; i < qWords.length; i++) {
+				var best = similarity(qWords[i], cat);
+				for (var j = 0; j < words.length; j++) {
+					var s = similarity(qWords[i], words[j]);
+					if (s > best) best = s;
+				}
+				sum += best;
+			}
+			var avg = sum / qWords.length;                 // je mehr Wörter passen, desto höher
+			return avg > whole ? avg : whole;
+		}
+
+		/* Liefert die Treffer nach Nähe sortiert: das Nächstliegende zuerst, dann Ähnliches. */
+		function search(raw) {
+			var qFull = norm(raw);
+			if (!qFull) return [];
+			var qWords = qFull.split(' ');
+			var scored = idx.map(function (item) {
+				return { item: item, score: scoreItem(qWords, qFull, item) };
+			});
+			scored.sort(function (a, b) {
+				if (b.score !== a.score) return b.score - a.score;
+				return a.item.label.length - b.item.label.length;
+			});
+			var out = [];
+			for (var k = 0; k < scored.length && out.length < MAX_RESULTS; k++) {
+				// Immer mindestens den nächstliegenden Treffer zeigen; danach nur noch Ähnliches.
+				if (out.length >= 1 && scored[k].score < SIMILAR_MIN) break;
+				out.push(scored[k].item);
+			}
+			return out;
+		}
+
+		function esc(s) {
+			return String(s).replace(/[&<>"]/g, function (c) {
+				return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+			});
+		}
+		/* Hebt den exakt getippten Teil im Label hervor (falls vorhanden). */
+		function highlight(label, raw) {
+			var q = raw.trim();
+			if (!q) return esc(label);
+			var pos = label.toLowerCase().indexOf(q.toLowerCase());
+			if (pos < 0) return esc(label);
+			return esc(label.slice(0, pos)) +
+				'<mark>' + esc(label.slice(pos, pos + q.length)) + '</mark>' +
+				esc(label.slice(pos + q.length));
+		}
 
 		function render(list) {
 			if (!input.value.trim()) { box.hidden = true; box.innerHTML = ''; return; }
 			if (!list.length) { box.hidden = false; box.innerHTML = '<div class="rf-command__none">Nichts gefunden — schauen Sie in den Kategorien oben.</div>'; return; }
 			box.hidden = false;
+			var raw = input.value;
 			box.innerHTML = list.map(function (r, i) {
-				return '<a href="' + r.url + '" data-i="' + i + '">' +
-					'<span>' + r.label + '</span>' +
-					'<span class="rf-res-cat">' + r.cat + '</span></a>';
+				return '<a href="' + esc(r.url) + '" data-i="' + i + '">' +
+					'<span class="rf-res-label">' + highlight(r.label, raw) + '</span>' +
+					'<span class="rf-res-cat">' + esc(r.cat) + '</span></a>';
 			}).join('');
 		}
-		function search(q) {
-			q = q.toLowerCase();
-			return idx.filter(function (r) {
-				return r.label.toLowerCase().indexOf(q) > -1 || r.cat.toLowerCase().indexOf(q) > -1;
-			}).slice(0, 7);
-		}
-		var results = [];
 		function update() {
-			results = search(input.value);
 			active = -1;
-			render(results);
+			render(search(input.value));
 		}
 		input.addEventListener('input', update);
 		input.addEventListener('focus', update);
@@ -159,7 +254,11 @@
 			else if (e.key === 'ArrowUp') { e.preventDefault(); active = Math.max(active - 1, 0); }
 			else if (e.key === 'Enter') { if (links[active]) { window.location = links[active].href; } return; }
 			else return;
-			links.forEach(function (l, i) { l.classList.toggle('is-active', i === active); });
+			links.forEach(function (l, i) {
+				var on = i === active;
+				l.classList.toggle('is-active', on);
+				if (on) l.scrollIntoView({ block: 'nearest' });
+			});
 		});
 		doc.addEventListener('click', function (e) {
 			if (!cmd.contains(e.target)) { box.hidden = true; }
