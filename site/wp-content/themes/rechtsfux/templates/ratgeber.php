@@ -15,8 +15,10 @@ get_header();
 			<?php echo rf_icon( 'chevron' ); // phpcs:ignore ?>
 			<span>Ratgeber</span>
 		</nav>
-		<div class="rf-pagehead__ico"><?php echo rf_icon( 'compass' ); // phpcs:ignore ?></div>
-		<h1>Ratgeber</h1>
+		<div class="rf-pagehead__head">
+			<div class="rf-pagehead__ico"><?php echo rf_icon( 'compass' ); // phpcs:ignore ?></div>
+			<h1>Ratgeber</h1>
+		</div>
 		<p class="rf-sub">Verständlich erklärt: Ihre Rechte und Pflichten im Schweizer Alltag.</p>
 	</div>
 </section>

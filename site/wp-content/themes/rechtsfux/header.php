@@ -119,12 +119,12 @@ defined( 'ABSPATH' ) || exit;
 		endforeach; ?>
 	</nav>
 	<div class="rf-mobile__cta">
-		<button class="rf-iconbtn rf-theme-toggle rf-theme-toggle--mobile" type="button" aria-label="Farbschema wechseln" style="width:100%;gap:.5rem;">
+		<a class="rf-btn rf-btn--primary rf-btn--block" href="<?php echo esc_url( rf_url( 'kuendigungsschreiben' ) ); ?>">Dokument starten</a>
+		<button class="rf-iconbtn rf-theme-toggle rf-theme-toggle--mobile" type="button" aria-label="Farbschema wechseln">
 			<?php echo rf_icon( 'sun', 'rf-icon--sun' ); // phpcs:ignore ?>
 			<?php echo rf_icon( 'moon', 'rf-icon--moon' ); // phpcs:ignore ?>
-			<span style="font-weight:600;">Hell / Dunkel</span>
+			<span>Hell / Dunkel</span>
 		</button>
-		<a class="rf-btn rf-btn--primary rf-btn--block" style="margin-top:.75rem;" href="<?php echo esc_url( rf_url( 'kuendigungsschreiben' ) ); ?>">Dokument starten</a>
 	</div>
 </div>
 
