@@ -25,8 +25,10 @@ $cat      = $parent ? rf_ia_category( get_post_field( 'post_name', $parent ) ) :
 			<?php endif; ?>
 			<span><?php the_title(); ?></span>
 		</nav>
-		<div class="rf-pagehead__ico"><?php echo rf_icon( 'pen' ); // phpcs:ignore ?></div>
-		<h1><?php the_title(); ?></h1>
+		<div class="rf-pagehead__head">
+			<div class="rf-pagehead__ico"><?php echo rf_icon( 'pen' ); // phpcs:ignore ?></div>
+			<h1><?php the_title(); ?></h1>
+		</div>
 		<?php if ( $lead ) : ?><p class="rf-sub"><?php echo esc_html( $lead ); ?></p><?php endif; ?>
 	</div>
 </section>
