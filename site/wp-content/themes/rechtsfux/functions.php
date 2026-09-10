@@ -64,6 +64,9 @@ function rf_assets() {
 	if ( is_page_template( 'templates/document.php' ) ) {
 		$d = RF_DIR . '/assets/js/document-preview.js';
 		wp_enqueue_script( 'rf-doc', RF_URI . '/assets/js/document-preview.js', array(), file_exists( $d ) ? filemtime( $d ) : RF_VER, true );
+
+		$a = RF_DIR . '/assets/js/address-autocomplete.js';
+		wp_enqueue_script( 'rf-address', RF_URI . '/assets/js/address-autocomplete.js', array(), file_exists( $a ) ? filemtime( $a ) : RF_VER, true );
 	}
 }
 add_action( 'wp_enqueue_scripts', 'rf_assets' );
@@ -74,6 +77,10 @@ add_action( 'wp_enqueue_scripts', 'rf_assets' );
 function rf_resource_hints( $hints, $relation ) {
 	if ( 'preconnect' === $relation ) {
 		$hints[] = array( 'href' => 'https://fonts.gstatic.com', 'crossorigin' );
+		// Offizielle Schweizer Adresssuche (nur auf Dokumentseiten genutzt).
+		if ( is_page_template( 'templates/document.php' ) ) {
+			$hints[] = 'https://api3.geo.admin.ch';
+		}
 	}
 	return $hints;
 }

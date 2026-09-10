@@ -534,6 +534,43 @@ strong { font-weight: 700; }
 .rf-preview .doc-clause { margin-bottom: 1.1rem; }
 .rf-preview .doc-clause strong { display: block; margin-bottom: .15rem; }
 
+/* Adress-Autovervollständigung (geo.admin.ch) */
+.rf-ac-host { position: relative; }
+.rf-ac {
+	position: absolute; top: calc(100% + 4px); left: 0; right: 0; z-index: 40;
+	background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-xs);
+	box-shadow: var(--shadow-lg); padding: .3rem; max-height: 280px; overflow-y: auto; overscroll-behavior: contain;
+}
+.rf-ac__item {
+	display: flex; flex-direction: column; gap: .1rem; width: 100%; text-align: left;
+	padding: .5rem .6rem; border: 0; background: transparent; border-radius: var(--r-xs);
+	color: var(--ink); font-family: var(--font-text); font-size: .92rem; cursor: pointer;
+}
+.rf-ac__item:hover, .rf-ac__item.is-active { background: var(--surface-2); color: var(--accent); }
+.rf-ac__main { font-weight: 600; }
+.rf-ac__sub { font-size: .8rem; color: var(--ink-3); }
+.rf-ac-note { margin: .3rem 0 0; font-size: .74rem; color: var(--ink-3); }
+
+/* PDF-Vorschau-Overlay */
+.rf-pdf-modal { position: fixed; inset: 0; z-index: 300; display: flex; align-items: center; justify-content: center; padding: clamp(.5rem, 3vw, 2rem); }
+.rf-pdf-modal__backdrop { position: absolute; inset: 0; background: rgba(9, 18, 15, .55); backdrop-filter: blur(2px); }
+.rf-pdf-modal__panel {
+	position: relative; z-index: 1; display: flex; flex-direction: column;
+	width: min(920px, 100%); max-height: 92vh;
+	background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--shadow-lg); overflow: hidden;
+}
+.rf-pdf-modal__bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding: .8rem 1rem; border-bottom: 1px solid var(--line); background: var(--surface); }
+.rf-pdf-modal__title { font-weight: 600; color: var(--ink-2); font-size: .9rem; }
+.rf-pdf-modal__actions { display: flex; gap: .5rem; flex-wrap: wrap; }
+.rf-pdf-scroll { overflow: auto; padding: clamp(1rem, 4vw, 2.5rem); background: #55625b; }
+.rf-a4 {
+	width: 794px; max-width: 100%; min-height: 1123px; margin: 0 auto; padding: 2.5cm;
+	background: #fff; color: #16211c; box-shadow: 0 10px 40px rgba(0,0,0,.35);
+	font-family: 'Hanken Grotesk', serif; font-size: .95rem; line-height: 1.7;
+}
+.rf-a4 .rf-preview { background: transparent; border: 0; box-shadow: none; padding: 0; min-height: 0; }
+.rf-a4 .rf-preview mark { background: transparent; }
+
 .rf-note { display: flex; gap: .6rem; align-items: flex-start; padding: .9rem 1.1rem; border-radius: var(--r-xs); background: var(--amber-soft); color: var(--ink-2); font-size: .86rem; margin-top: 1rem; border: 1px solid color-mix(in srgb, var(--amber) 30%, transparent); }
 .rf-note svg { width: 20px; height: 20px; color: var(--amber); flex: none; margin-top: 1px; }
 
@@ -617,10 +654,22 @@ strong { font-weight: 700; }
 /* ==========================================================================
    Print (Dokument-Vorschau)
    ========================================================================== */
+@page { size: A4; margin: 2cm; }
+
 @media print {
 	.rf-header, .rf-footer, .rf-form, .rf-preview-bar, .rf-breadcrumb, .rf-note, .rf-pagehead__ico, .rf-mobile { display: none !important; }
 	body { background: #fff; }
 	.rf-doc { display: block; }
 	.rf-preview { box-shadow: none; border: 0; padding: 0; }
 	.rf-preview mark { background: transparent; }
+	.rf-ac { display: none !important; }
+
+	/* PDF-Vorschau offen: ausschliesslich die A4-Seite drucken. */
+	body.is-pdf-open > *:not(.rf-pdf-modal) { display: none !important; }
+	body.is-pdf-open .rf-pdf-modal { position: static; display: block; padding: 0; }
+	body.is-pdf-open .rf-pdf-modal__backdrop,
+	body.is-pdf-open .rf-pdf-modal__bar { display: none !important; }
+	body.is-pdf-open .rf-pdf-modal__panel { border: 0; box-shadow: none; max-height: none; width: auto; }
+	body.is-pdf-open .rf-pdf-scroll { overflow: visible; padding: 0; background: #fff; }
+	body.is-pdf-open .rf-a4 { width: auto; min-height: 0; margin: 0; padding: 0; box-shadow: none; }
 }

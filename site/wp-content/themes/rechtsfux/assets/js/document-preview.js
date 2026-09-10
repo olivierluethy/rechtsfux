@@ -39,9 +39,75 @@
 	form.addEventListener('change', update);
 	update();
 
-	/* Drucken */
-	var printBtn = doc.querySelector('.rf-print');
-	if (printBtn) printBtn.addEventListener('click', function () { window.print(); });
+	/* PDF-Vorschau (A4) + «Als PDF speichern» über die Browser-Druckfunktion.
+	 * Das Overlay zeigt das Dokument als echte A4-Seite (WYSIWYG) — man sieht,
+	 * wie das PDF aussieht, ohne es herunterladen zu müssen. */
+	var pdfBtn = doc.querySelector('.rf-pdf');
+	if (pdfBtn) {
+		var overlay = null;
+
+		function svg(path) {
+			return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+				'stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + path + '</svg>';
+		}
+		var icoDownload = '<path d="M12 4v10"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/>';
+		var icoPrint = '<path d="M7 8V3h10v5"/><rect x="4" y="8" width="16" height="8" rx="1.5"/><path d="M7 14h10v6H7z"/>';
+
+		function docName() {
+			var h = document.querySelector('.rf-pagehead h1, .rf-pagehead__title, h1');
+			return h ? h.textContent.trim() : 'Rechtsfux-Dokument';
+		}
+
+		function build() {
+			overlay = document.createElement('div');
+			overlay.className = 'rf-pdf-modal';
+			overlay.hidden = true;
+			overlay.innerHTML =
+				'<div class="rf-pdf-modal__backdrop" data-close></div>' +
+				'<div class="rf-pdf-modal__panel" role="dialog" aria-modal="true" aria-label="PDF-Vorschau">' +
+					'<div class="rf-pdf-modal__bar">' +
+						'<span class="rf-pdf-modal__title">Vorschau — so sieht Ihr PDF aus</span>' +
+						'<div class="rf-pdf-modal__actions">' +
+							'<button type="button" class="rf-btn rf-btn--primary rf-pdf-save">' + svg(icoDownload) + ' Als PDF speichern</button>' +
+							'<button type="button" class="rf-btn rf-btn--ghost rf-pdf-print">' + svg(icoPrint) + ' Drucken</button>' +
+							'<button type="button" class="rf-btn rf-btn--soft" data-close>Schliessen</button>' +
+						'</div>' +
+					'</div>' +
+					'<div class="rf-pdf-scroll"><div class="rf-a4"><div class="rf-preview" data-a4-doc></div></div></div>' +
+				'</div>';
+			document.body.appendChild(overlay);
+
+			overlay.addEventListener('click', function (e) {
+				if (e.target.closest('[data-close]')) close();
+			});
+			overlay.querySelector('.rf-pdf-save').addEventListener('click', printDoc);
+			overlay.querySelector('.rf-pdf-print').addEventListener('click', printDoc);
+		}
+
+		function open() {
+			if (!overlay) build();
+			// Aktuellen Vorschauinhalt in die A4-Seite spiegeln.
+			overlay.querySelector('[data-a4-doc]').innerHTML = preview.innerHTML;
+			overlay.hidden = false;
+			document.body.classList.add('is-pdf-open');
+		}
+		function close() {
+			if (overlay) overlay.hidden = true;
+			document.body.classList.remove('is-pdf-open');
+		}
+		function printDoc() {
+			// Tab-Titel kurz auf den Dokumentnamen setzen → schöner PDF-Dateiname.
+			var prev = document.title;
+			document.title = docName();
+			window.print();
+			setTimeout(function () { document.title = prev; }, 600);
+		}
+
+		pdfBtn.addEventListener('click', open);
+		document.addEventListener('keydown', function (e) {
+			if (e.key === 'Escape' && overlay && !overlay.hidden) close();
+		});
+	}
 
 	/* Kopieren */
 	var copyBtn = doc.querySelector('.rf-copy');

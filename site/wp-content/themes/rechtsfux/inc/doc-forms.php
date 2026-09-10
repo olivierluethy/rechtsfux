@@ -14,6 +14,23 @@ function rf_bind( $key, $empty ) {
 	return '<mark data-bind="' . esc_attr( $key ) . '" data-empty="' . esc_attr( $empty ) . '">' . esc_html( $empty ) . '</mark>';
 }
 
+/**
+ * Aktionsleiste über der Vorschau (in allen Dokumenten identisch).
+ * «Als PDF speichern» öffnet die A4-Vorschau (document-preview.js),
+ * «Kopieren» kopiert den Dokumenttext.
+ */
+function rf_preview_bar() {
+	?>
+	<div class="rf-preview-bar">
+		<span class="rf-preview-bar__label"><?php echo rf_icon( 'pen' ); // phpcs:ignore ?> Live-Vorschau</span>
+		<div class="rf-preview-actions">
+			<button class="rf-btn rf-btn--primary rf-pdf" type="button"><?php echo rf_icon( 'download' ); // phpcs:ignore ?> Als PDF speichern</button>
+			<button class="rf-btn rf-btn--soft rf-copy" type="button"><?php echo rf_icon( 'copy' ); // phpcs:ignore ?> Kopieren</button>
+		</div>
+	</div>
+	<?php
+}
+
 /** Rendert Formular + Vorschau für den gegebenen Dokumenttyp. */
 function rf_render_document( $type ) {
 	switch ( $type ) {
@@ -55,7 +72,7 @@ function rf_doc_kuendigung_wohnung() { ?>
 					<div class="rf-field"><label>Vorname</label><input class="rf-input" name="abs_vorname" placeholder="Anna"></div>
 					<div class="rf-field"><label>Nachname</label><input class="rf-input" name="abs_nachname" placeholder="Muster"></div>
 				</div>
-				<div class="rf-field"><label>Strasse &amp; Nr.</label><input class="rf-input" name="abs_strasse" placeholder="Bahnhofstrasse 1"></div>
+				<div class="rf-field"><label>Strasse &amp; Nr.</label><input class="rf-input" name="abs_strasse" data-rf-street placeholder="Bahnhofstrasse 1"></div>
 				<div class="rf-field-row">
 					<div class="rf-field"><label>PLZ</label><input class="rf-input" name="abs_plz" placeholder="8001"></div>
 					<div class="rf-field"><label>Ort</label><input class="rf-input" name="abs_ort" placeholder="Zürich"></div>
@@ -65,7 +82,7 @@ function rf_doc_kuendigung_wohnung() { ?>
 			<fieldset class="rf-fieldset">
 				<legend>Empfänger (Vermieter / Verwaltung)</legend>
 				<div class="rf-field"><label>Name / Firma</label><input class="rf-input" name="emp_name" placeholder="Immobilien Verwaltung AG"></div>
-				<div class="rf-field"><label>Strasse &amp; Nr.</label><input class="rf-input" name="emp_strasse" placeholder="Verwaltungsweg 5"></div>
+				<div class="rf-field"><label>Strasse &amp; Nr.</label><input class="rf-input" name="emp_strasse" data-rf-street placeholder="Verwaltungsweg 5"></div>
 				<div class="rf-field-row">
 					<div class="rf-field"><label>PLZ</label><input class="rf-input" name="emp_plz" placeholder="8004"></div>
 					<div class="rf-field"><label>Ort</label><input class="rf-input" name="emp_ort" placeholder="Zürich"></div>
@@ -77,19 +94,13 @@ function rf_doc_kuendigung_wohnung() { ?>
 				<div class="rf-field"><label>Adresse der Wohnung <span class="rf-help">falls abweichend</span></label><input class="rf-input" name="obj_adresse" placeholder="Bahnhofstrasse 1, 4. OG links"></div>
 				<div class="rf-field-row">
 					<div class="rf-field"><label>Kündigung per <span class="rf-help">nächster Termin</span></label><input class="rf-input" type="date" name="termin"></div>
-					<div class="rf-field"><label>Ort/Datum des Schreibens</label><input class="rf-input" name="brief_ort" placeholder="Zürich"></div>
+					<div class="rf-field"><label>Ort/Datum des Schreibens</label><input class="rf-input" name="brief_ort" data-rf-locality placeholder="Zürich"></div>
 				</div>
 			</fieldset>
 		</form>
 
 		<div class="rf-preview-wrap">
-			<div class="rf-preview-bar">
-				<span class="rf-preview-bar__label"><?php echo rf_icon( 'pen' ); // phpcs:ignore ?> Live-Vorschau</span>
-				<div class="rf-preview-actions">
-					<button class="rf-btn rf-btn--ghost rf-print" type="button"><?php echo rf_icon( 'print' ); // phpcs:ignore ?> Drucken</button>
-					<button class="rf-btn rf-btn--soft rf-copy" type="button"><?php echo rf_icon( 'copy' ); // phpcs:ignore ?> Kopieren</button>
-				</div>
-			</div>
+			<?php rf_preview_bar(); ?>
 			<div class="rf-preview" data-preview>
 				<div class="doc-sender">
 					<?php echo rf_bind( 'abs_vorname', 'Vorname' ); // phpcs:ignore ?> <?php echo rf_bind( 'abs_nachname', 'Nachname' ); // phpcs:ignore ?><br>
@@ -132,7 +143,7 @@ function rf_doc_arbeitsvertrag() { ?>
 				<div class="rf-field"><label>Funktion / Position</label><input class="rf-input" name="funktion" placeholder="Sachbearbeiterin Finanzen"></div>
 				<div class="rf-field-row">
 					<div class="rf-field"><label>Eintrittsdatum</label><input class="rf-input" type="date" name="eintritt"></div>
-					<div class="rf-field"><label>Arbeitsort</label><input class="rf-input" name="ort" placeholder="Zürich"></div>
+					<div class="rf-field"><label>Arbeitsort</label><input class="rf-input" name="ort" data-rf-locality placeholder="Zürich"></div>
 				</div>
 				<div class="rf-field-row">
 					<div class="rf-field"><label>Pensum (%)</label><input class="rf-input" type="number" name="pensum" placeholder="100" min="1" max="100"></div>
@@ -160,13 +171,7 @@ function rf_doc_arbeitsvertrag() { ?>
 		</form>
 
 		<div class="rf-preview-wrap">
-			<div class="rf-preview-bar">
-				<span class="rf-preview-bar__label"><?php echo rf_icon( 'pen' ); // phpcs:ignore ?> Live-Vorschau</span>
-				<div class="rf-preview-actions">
-					<button class="rf-btn rf-btn--ghost rf-print" type="button"><?php echo rf_icon( 'print' ); // phpcs:ignore ?> Drucken</button>
-					<button class="rf-btn rf-btn--soft rf-copy" type="button"><?php echo rf_icon( 'copy' ); // phpcs:ignore ?> Kopieren</button>
-				</div>
-			</div>
+			<?php rf_preview_bar(); ?>
 			<div class="rf-preview" data-preview>
 				<h4 class="doc-title">Arbeitsvertrag</h4>
 				<p>zwischen <strong><?php echo rf_bind( 'ag_name', 'Arbeitgeber' ); // phpcs:ignore ?></strong> (Arbeitgeber)</p>
@@ -197,7 +202,7 @@ function rf_doc_patientenverfuegung() { ?>
 				<div class="rf-field"><label>Vor- und Nachname</label><input class="rf-input" name="name" placeholder="Anna Muster"></div>
 				<div class="rf-field-row">
 					<div class="rf-field"><label>Geburtsdatum</label><input class="rf-input" type="date" name="geburtsdatum"></div>
-					<div class="rf-field"><label>Wohnort</label><input class="rf-input" name="wohnort" placeholder="8001 Zürich"></div>
+					<div class="rf-field"><label>Wohnort</label><input class="rf-input" name="wohnort" data-rf-locality="full" placeholder="8001 Zürich"></div>
 				</div>
 			</fieldset>
 			<fieldset class="rf-fieldset">
@@ -225,18 +230,12 @@ function rf_doc_patientenverfuegung() { ?>
 						<option value="eine Organspende ablehne">Ich lehne eine Organspende ab</option>
 					</select>
 				</div>
-				<div class="rf-field"><label>Ort/Datum</label><input class="rf-input" name="brief_ort" placeholder="Zürich"></div>
+				<div class="rf-field"><label>Ort/Datum</label><input class="rf-input" name="brief_ort" data-rf-locality placeholder="Zürich"></div>
 			</fieldset>
 		</form>
 
 		<div class="rf-preview-wrap">
-			<div class="rf-preview-bar">
-				<span class="rf-preview-bar__label"><?php echo rf_icon( 'pen' ); // phpcs:ignore ?> Live-Vorschau</span>
-				<div class="rf-preview-actions">
-					<button class="rf-btn rf-btn--ghost rf-print" type="button"><?php echo rf_icon( 'print' ); // phpcs:ignore ?> Drucken</button>
-					<button class="rf-btn rf-btn--soft rf-copy" type="button"><?php echo rf_icon( 'copy' ); // phpcs:ignore ?> Kopieren</button>
-				</div>
-			</div>
+			<?php rf_preview_bar(); ?>
 			<div class="rf-preview" data-preview>
 				<h4 class="doc-title">Patientenverfügung</h4>
 				<p>Ich, <strong><?php echo rf_bind( 'name', 'Vor- und Nachname' ); // phpcs:ignore ?></strong>, geboren am <mark data-bind="geburtsdatum" data-empty="[Geburtsdatum]" data-date>[Geburtsdatum]</mark>, wohnhaft in <?php echo rf_bind( 'wohnort', 'Wohnort' ); // phpcs:ignore ?>, verfüge für den Fall, dass ich meinen Willen nicht mehr äussern kann, was folgt:</p>
@@ -262,7 +261,7 @@ function rf_doc_kuendigung_arbeit() { ?>
 					<div class="rf-field"><label>Vorname</label><input class="rf-input" name="abs_vorname" placeholder="Anna"></div>
 					<div class="rf-field"><label>Nachname</label><input class="rf-input" name="abs_nachname" placeholder="Muster"></div>
 				</div>
-				<div class="rf-field"><label>Strasse &amp; Nr.</label><input class="rf-input" name="abs_strasse" placeholder="Bahnhofstrasse 1"></div>
+				<div class="rf-field"><label>Strasse &amp; Nr.</label><input class="rf-input" name="abs_strasse" data-rf-street placeholder="Bahnhofstrasse 1"></div>
 				<div class="rf-field-row">
 					<div class="rf-field"><label>PLZ</label><input class="rf-input" name="abs_plz" placeholder="8001"></div>
 					<div class="rf-field"><label>Ort</label><input class="rf-input" name="abs_ort" placeholder="Zürich"></div>
@@ -272,7 +271,7 @@ function rf_doc_kuendigung_arbeit() { ?>
 			<fieldset class="rf-fieldset">
 				<legend>Arbeitgeber</legend>
 				<div class="rf-field"><label>Firma / Ansprechperson</label><input class="rf-input" name="ag_name" placeholder="Muster AG, Personalabteilung"></div>
-				<div class="rf-field"><label>Strasse &amp; Nr.</label><input class="rf-input" name="ag_strasse" placeholder="Industriestrasse 10"></div>
+				<div class="rf-field"><label>Strasse &amp; Nr.</label><input class="rf-input" name="ag_strasse" data-rf-street placeholder="Industriestrasse 10"></div>
 				<div class="rf-field-row">
 					<div class="rf-field"><label>PLZ</label><input class="rf-input" name="ag_plz" placeholder="8005"></div>
 					<div class="rf-field"><label>Ort</label><input class="rf-input" name="ag_ort" placeholder="Zürich"></div>
@@ -284,20 +283,14 @@ function rf_doc_kuendigung_arbeit() { ?>
 				<div class="rf-field"><label>Eintrittsdatum <span class="rf-help">für die Fristberechnung nach OR</span></label><input class="rf-input" type="date" name="eintritt"></div>
 				<div class="rf-field-row">
 					<div class="rf-field"><label>Beendigung per <span class="rf-help">letzter Arbeitstag · wird berechnet, überschreibbar</span></label><input class="rf-input" type="date" name="termin"></div>
-					<div class="rf-field"><label>Ort/Datum des Schreibens</label><input class="rf-input" name="brief_ort" placeholder="Zürich"></div>
+					<div class="rf-field"><label>Ort/Datum des Schreibens</label><input class="rf-input" name="brief_ort" data-rf-locality placeholder="Zürich"></div>
 				</div>
 				<p class="rf-help" data-frist-info style="margin:.2rem 0 0; color: var(--accent);"></p>
 			</fieldset>
 		</form>
 
 		<div class="rf-preview-wrap">
-			<div class="rf-preview-bar">
-				<span class="rf-preview-bar__label"><?php echo rf_icon( 'pen' ); // phpcs:ignore ?> Live-Vorschau</span>
-				<div class="rf-preview-actions">
-					<button class="rf-btn rf-btn--ghost rf-print" type="button"><?php echo rf_icon( 'print' ); // phpcs:ignore ?> Drucken</button>
-					<button class="rf-btn rf-btn--soft rf-copy" type="button"><?php echo rf_icon( 'copy' ); // phpcs:ignore ?> Kopieren</button>
-				</div>
-			</div>
+			<?php rf_preview_bar(); ?>
 			<div class="rf-preview" data-preview>
 				<div class="doc-sender">
 					<?php echo rf_bind( 'abs_vorname', 'Vorname' ); // phpcs:ignore ?> <?php echo rf_bind( 'abs_nachname', 'Nachname' ); // phpcs:ignore ?><br>
@@ -351,19 +344,13 @@ function rf_doc_auto_kaufvertrag() { ?>
 				<legend>Kauf</legend>
 				<div class="rf-field-row">
 					<div class="rf-field"><label>Kaufpreis (CHF)</label><input class="rf-input" name="preis" placeholder="14500"></div>
-					<div class="rf-field"><label>Ort/Datum</label><input class="rf-input" name="brief_ort" placeholder="Zürich"></div>
+					<div class="rf-field"><label>Ort/Datum</label><input class="rf-input" name="brief_ort" data-rf-locality placeholder="Zürich"></div>
 				</div>
 			</fieldset>
 		</form>
 
 		<div class="rf-preview-wrap">
-			<div class="rf-preview-bar">
-				<span class="rf-preview-bar__label"><?php echo rf_icon( 'pen' ); // phpcs:ignore ?> Live-Vorschau</span>
-				<div class="rf-preview-actions">
-					<button class="rf-btn rf-btn--ghost rf-print" type="button"><?php echo rf_icon( 'print' ); // phpcs:ignore ?> Drucken</button>
-					<button class="rf-btn rf-btn--soft rf-copy" type="button"><?php echo rf_icon( 'copy' ); // phpcs:ignore ?> Kopieren</button>
-				</div>
-			</div>
+			<?php rf_preview_bar(); ?>
 			<div class="rf-preview" data-preview>
 				<h4 class="doc-title">Kaufvertrag für ein Fahrzeug</h4>
 				<p>zwischen <strong><?php echo rf_bind( 'verk', 'Verkäufer/in' ); // phpcs:ignore ?></strong> (Verkäufer/in)</p>
@@ -400,19 +387,13 @@ function rf_doc_darlehensvertrag() { ?>
 				</div>
 				<div class="rf-field-row">
 					<div class="rf-field"><label>Rückzahlung bis</label><input class="rf-input" type="date" name="rueck"></div>
-					<div class="rf-field"><label>Ort/Datum</label><input class="rf-input" name="brief_ort" placeholder="Zürich"></div>
+					<div class="rf-field"><label>Ort/Datum</label><input class="rf-input" name="brief_ort" data-rf-locality placeholder="Zürich"></div>
 				</div>
 			</fieldset>
 		</form>
 
 		<div class="rf-preview-wrap">
-			<div class="rf-preview-bar">
-				<span class="rf-preview-bar__label"><?php echo rf_icon( 'pen' ); // phpcs:ignore ?> Live-Vorschau</span>
-				<div class="rf-preview-actions">
-					<button class="rf-btn rf-btn--ghost rf-print" type="button"><?php echo rf_icon( 'print' ); // phpcs:ignore ?> Drucken</button>
-					<button class="rf-btn rf-btn--soft rf-copy" type="button"><?php echo rf_icon( 'copy' ); // phpcs:ignore ?> Kopieren</button>
-				</div>
-			</div>
+			<?php rf_preview_bar(); ?>
 			<div class="rf-preview" data-preview>
 				<h4 class="doc-title">Darlehensvertrag</h4>
 				<p>zwischen <strong><?php echo rf_bind( 'dg', 'Darlehensgeber/in' ); // phpcs:ignore ?></strong> (Darlehensgeber/in)</p>
@@ -454,19 +435,13 @@ function rf_doc_untermietvertrag() { ?>
 				</div>
 				<div class="rf-field-row">
 					<div class="rf-field"><label>Befristet bis <span class="rf-help">leer = unbefristet</span></label><input class="rf-input" type="date" name="ende"></div>
-					<div class="rf-field"><label>Ort/Datum</label><input class="rf-input" name="brief_ort" placeholder="Zürich"></div>
+					<div class="rf-field"><label>Ort/Datum</label><input class="rf-input" name="brief_ort" data-rf-locality placeholder="Zürich"></div>
 				</div>
 			</fieldset>
 		</form>
 
 		<div class="rf-preview-wrap">
-			<div class="rf-preview-bar">
-				<span class="rf-preview-bar__label"><?php echo rf_icon( 'pen' ); // phpcs:ignore ?> Live-Vorschau</span>
-				<div class="rf-preview-actions">
-					<button class="rf-btn rf-btn--ghost rf-print" type="button"><?php echo rf_icon( 'print' ); // phpcs:ignore ?> Drucken</button>
-					<button class="rf-btn rf-btn--soft rf-copy" type="button"><?php echo rf_icon( 'copy' ); // phpcs:ignore ?> Kopieren</button>
-				</div>
-			</div>
+			<?php rf_preview_bar(); ?>
 			<div class="rf-preview" data-preview>
 				<h4 class="doc-title">Untermietvertrag</h4>
 				<p>zwischen <strong><?php echo rf_bind( 'uv', 'Untervermieter/in' ); // phpcs:ignore ?></strong> (Untervermieter/in)</p>
@@ -496,7 +471,7 @@ function rf_doc_maengelruege() { ?>
 					<div class="rf-field"><label>Vorname</label><input class="rf-input" name="abs_vorname" placeholder="Anna"></div>
 					<div class="rf-field"><label>Nachname</label><input class="rf-input" name="abs_nachname" placeholder="Muster"></div>
 				</div>
-				<div class="rf-field"><label>Strasse &amp; Nr.</label><input class="rf-input" name="abs_strasse" placeholder="Bahnhofstrasse 1"></div>
+				<div class="rf-field"><label>Strasse &amp; Nr.</label><input class="rf-input" name="abs_strasse" data-rf-street placeholder="Bahnhofstrasse 1"></div>
 				<div class="rf-field-row">
 					<div class="rf-field"><label>PLZ</label><input class="rf-input" name="abs_plz" placeholder="8001"></div>
 					<div class="rf-field"><label>Ort</label><input class="rf-input" name="abs_ort" placeholder="Zürich"></div>
@@ -505,7 +480,7 @@ function rf_doc_maengelruege() { ?>
 			<fieldset class="rf-fieldset">
 				<legend>Empfänger (Verkäufer / Anbieter)</legend>
 				<div class="rf-field"><label>Firma / Name</label><input class="rf-input" name="emp_name" placeholder="Beispiel Shop AG"></div>
-				<div class="rf-field"><label>Strasse &amp; Nr.</label><input class="rf-input" name="emp_strasse" placeholder="Handelsweg 3"></div>
+				<div class="rf-field"><label>Strasse &amp; Nr.</label><input class="rf-input" name="emp_strasse" data-rf-street placeholder="Handelsweg 3"></div>
 				<div class="rf-field-row">
 					<div class="rf-field"><label>PLZ</label><input class="rf-input" name="emp_plz" placeholder="8004"></div>
 					<div class="rf-field"><label>Ort</label><input class="rf-input" name="emp_ort" placeholder="Zürich"></div>
@@ -517,19 +492,13 @@ function rf_doc_maengelruege() { ?>
 				<div class="rf-field"><label>Beschreibung des Mangels</label><textarea class="rf-textarea" name="mangel" placeholder="Das Gerät heizt nicht mehr auf und schaltet sich nach kurzer Zeit ab."></textarea></div>
 				<div class="rf-field-row">
 					<div class="rf-field"><label>Frist zur Behebung bis</label><input class="rf-input" type="date" name="frist"></div>
-					<div class="rf-field"><label>Ort/Datum</label><input class="rf-input" name="brief_ort" placeholder="Zürich"></div>
+					<div class="rf-field"><label>Ort/Datum</label><input class="rf-input" name="brief_ort" data-rf-locality placeholder="Zürich"></div>
 				</div>
 			</fieldset>
 		</form>
 
 		<div class="rf-preview-wrap">
-			<div class="rf-preview-bar">
-				<span class="rf-preview-bar__label"><?php echo rf_icon( 'pen' ); // phpcs:ignore ?> Live-Vorschau</span>
-				<div class="rf-preview-actions">
-					<button class="rf-btn rf-btn--ghost rf-print" type="button"><?php echo rf_icon( 'print' ); // phpcs:ignore ?> Drucken</button>
-					<button class="rf-btn rf-btn--soft rf-copy" type="button"><?php echo rf_icon( 'copy' ); // phpcs:ignore ?> Kopieren</button>
-				</div>
-			</div>
+			<?php rf_preview_bar(); ?>
 			<div class="rf-preview" data-preview>
 				<div class="doc-sender">
 					<?php echo rf_bind( 'abs_vorname', 'Vorname' ); // phpcs:ignore ?> <?php echo rf_bind( 'abs_nachname', 'Nachname' ); // phpcs:ignore ?><br>
