@@ -62,8 +62,19 @@ function rf_assets() {
 		wp_enqueue_script( 'rf-calc', RF_URI . '/assets/js/calculators.js', array(), file_exists( $c ) ? filemtime( $c ) : RF_VER, true );
 	}
 	if ( is_page_template( 'templates/document.php' ) ) {
+		// PDF-Erzeugung im Browser (pdfmake) + eingebauter Font-VFS.
+		$pm  = RF_DIR . '/assets/vendor/pdfmake/pdfmake.min.js';
+		$vfs = RF_DIR . '/assets/vendor/pdfmake/vfs_fonts.js';
+		wp_enqueue_script( 'rf-pdfmake', RF_URI . '/assets/vendor/pdfmake/pdfmake.min.js', array(), file_exists( $pm ) ? filemtime( $pm ) : RF_VER, true );
+		wp_enqueue_script( 'rf-pdfmake-vfs', RF_URI . '/assets/vendor/pdfmake/vfs_fonts.js', array( 'rf-pdfmake' ), file_exists( $vfs ) ? filemtime( $vfs ) : RF_VER, true );
+
 		$d = RF_DIR . '/assets/js/document-preview.js';
-		wp_enqueue_script( 'rf-doc', RF_URI . '/assets/js/document-preview.js', array(), file_exists( $d ) ? filemtime( $d ) : RF_VER, true );
+		wp_enqueue_script( 'rf-doc', RF_URI . '/assets/js/document-preview.js', array( 'rf-pdfmake', 'rf-pdfmake-vfs' ), file_exists( $d ) ? filemtime( $d ) : RF_VER, true );
+
+		// PDF.js-Viewer (lokal gehostet) für die WYSIWYG-Vorschau.
+		wp_localize_script( 'rf-doc', 'RF_DOC', array(
+			'pdfjsViewer' => RF_URI . '/assets/vendor/pdfjs/web/viewer.html',
+		) );
 
 		$a = RF_DIR . '/assets/js/address-autocomplete.js';
 		wp_enqueue_script( 'rf-address', RF_URI . '/assets/js/address-autocomplete.js', array(), file_exists( $a ) ? filemtime( $a ) : RF_VER, true );
