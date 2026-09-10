@@ -16,14 +16,23 @@ get_header();
 			<?php echo rf_icon( 'chevron' ); // phpcs:ignore ?>
 			<span>Tools</span>
 		</nav>
-		<div class="rf-pagehead__ico"><?php echo rf_icon( 'calculator' ); // phpcs:ignore ?></div>
-		<h1>Rechner, die sofort rechnen</h1>
+		<div class="rf-pagehead__head">
+			<div class="rf-pagehead__ico"><?php echo rf_icon( 'calculator' ); // phpcs:ignore ?></div>
+			<h1>Rechner, die sofort rechnen</h1>
+		</div>
 		<p class="rf-sub">Vier kleine Helfer für den Schweizer Alltag — ohne Anmeldung, direkt in Ihrem Browser. Werte gelten als Orientierung ohne Gewähr.</p>
+		<nav class="rf-calc-nav" aria-label="Rechner-Auswahl">
+			<a class="rf-chip" href="#erbschaft"><?php echo rf_icon( 'scale' ); // phpcs:ignore ?> Erbschaft</a>
+			<a class="rf-chip" href="#busse"><?php echo rf_icon( 'flag' ); // phpcs:ignore ?> Busse</a>
+			<a class="rf-chip" href="#mwst"><?php echo rf_icon( 'calculator' ); // phpcs:ignore ?> MwSt</a>
+			<a class="rf-chip" href="#lohn"><?php echo rf_icon( 'contract' ); // phpcs:ignore ?> 13. Monatslohn</a>
+		</nav>
 	</div>
 </section>
 
 <section class="rf-section" style="padding-top:1rem;">
-	<div class="rf-container rf-narrow">
+	<div class="rf-container">
+		<div class="rf-calc-grid">
 
 		<!-- ============ ERBSCHAFT ============ -->
 		<div class="rf-calc" id="erbschaft" data-calc="erbschaft">
@@ -115,6 +124,7 @@ get_header();
 			<div class="rf-note"><?php echo rf_icon( 'clock' ); // phpcs:ignore ?><span>Ein 13. Monatslohn ist nur geschuldet, wenn er vereinbart ist. Bei unterjährigem Ein- oder Austritt wird er in der Regel anteilig (pro rata) ausbezahlt.</span></div>
 		</div>
 
+		</div>
 	</div>
 </section>
 

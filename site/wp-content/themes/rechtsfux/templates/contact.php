@@ -15,8 +15,10 @@ get_header();
 			<?php echo rf_icon( 'chevron' ); // phpcs:ignore ?>
 			<span>Kontakt</span>
 		</nav>
-		<div class="rf-pagehead__ico"><?php echo rf_icon( 'letter' ); // phpcs:ignore ?></div>
-		<h1>Sagen Sie Hallo</h1>
+		<div class="rf-pagehead__head">
+			<div class="rf-pagehead__ico"><?php echo rf_icon( 'letter' ); // phpcs:ignore ?></div>
+			<h1>Sagen Sie Hallo</h1>
+		</div>
 		<p class="rf-sub">Eine Frage, ein Hinweis, ein Wunsch für eine neue Vorlage? Schreiben Sie uns.</p>
 	</div>
 </section>

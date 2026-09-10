@@ -20,8 +20,10 @@ $featured_url = $cat['featured'] ? rf_url( $cat['featured'] ) : '';
 			<?php echo rf_icon( 'chevron' ); // phpcs:ignore ?>
 			<span><?php echo esc_html( $cat['label'] ); ?></span>
 		</nav>
-		<div class="rf-pagehead__ico"><?php echo rf_icon( $cat['icon'] ); // phpcs:ignore ?></div>
-		<h1><?php echo esc_html( $cat['label'] ); ?></h1>
+		<div class="rf-pagehead__head">
+			<div class="rf-pagehead__ico"><?php echo rf_icon( $cat['icon'] ); // phpcs:ignore ?></div>
+			<h1><?php echo esc_html( $cat['label'] ); ?></h1>
+		</div>
 		<p class="rf-sub"><?php echo esc_html( $cat['tagline'] ); ?></p>
 	</div>
 </section>
