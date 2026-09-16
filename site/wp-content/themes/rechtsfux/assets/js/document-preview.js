@@ -7,6 +7,18 @@
 	var form = doc.querySelector('.rf-form');
 	var preview = doc.querySelector('[data-preview]');
 
+	/* Paywall-Schutz für die Live-Vorschau -------------------------------------
+	 * Der Inhalt der Vorschau soll nicht per Maus herauskopierbar sein. Das
+	 * Markieren unterbindet bereits das CSS (user-select: none); hier fangen wir
+	 * zusätzlich das Rechtsklick-Kontextmenü ab, damit «Kopieren» nicht darüber
+	 * zurückkommt. Der PDF-Weg (.rf-pdf) läuft separat und bleibt erlaubt. */
+	preview.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+
+	/* Ist DIESES Dokument kostenpflichtig gesperrt? Eine spätere Paywall muss
+	 * dafür nur `data-locked` am `.rf-doc`-Element setzen. Heute ist nichts
+	 * gesperrt → Verhalten unverändert. */
+	function isLocked() { return doc.hasAttribute('data-locked'); }
+
 	var months = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
 	function formatDate(val) {
 		// val im Format YYYY-MM-DD
@@ -254,6 +266,12 @@
 
 	/* Kopieren */
 	var copyBtn = doc.querySelector('.rf-copy');
+	if (copyBtn && isLocked()) {
+		// Kostenpflichtig gesperrtes Dokument: Kopieren-Button entfernen,
+		// damit die Vorschau nicht per Klick herauskopiert werden kann.
+		copyBtn.parentNode && copyBtn.parentNode.removeChild(copyBtn);
+		copyBtn = null;
+	}
 	if (copyBtn) {
 		copyBtn.addEventListener('click', function () {
 			var text = preview.innerText.replace(/\n{3,}/g, '\n\n').trim();
